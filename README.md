@@ -1,4 +1,4 @@
-# school-leaderboard
+# NEU-Leaderboard
 Fitness leaderboard to compete with your classmates
 
 # Project Proposal: [Name TBD]
