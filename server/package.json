@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./server/src/services/sendConfirmationMailer.ts",
   "scripts": {
-    "start": "node index.js",
+    "start": "node ./src/services/sendConfirmationMailer.ts",
     "test": "jest"
   },
   "keywords": [],
