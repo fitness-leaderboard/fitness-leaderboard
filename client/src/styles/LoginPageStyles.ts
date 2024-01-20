@@ -45,7 +45,11 @@ export const RightColumn = styled.div<DarkThemeProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 400px;
+  min-width: 600px;
+
+  @media (max-width: 1024px) {
+    min-width: 400px;
+  }
 
   @media (max-width: 768px) {
     flex: 1;
@@ -60,7 +64,7 @@ export const MainWrapper = styled.div<DarkThemeProps>`
   align-items: center;
   min-height: calc(100vh - 40px);
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   padding: ${theme.spacing.base};
   background-color: ${props => (props.darkMode ? theme.colors.neuDarkGray : theme.colors.neuWhite)};
 `;
@@ -79,12 +83,16 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 85%;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 100%;
 `;
 
 export const InputLabel = styled.label<DarkThemeProps>`
@@ -105,7 +113,7 @@ export const Input = styled.input<DarkThemeProps>`
   outline: 1px solid ${theme.colors.neuRed};
   border-radius: 10px;
   width: 100%;
-  max-width: 250px;
+  height: 44px;
   padding: 6px;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
@@ -135,8 +143,7 @@ export const LoginButton = styled.button`
   border-radius: 10px;
   margin-top: 10px;
   width: 100%;
-  max-width: 250px;
-  height: 32px;
+  height: 40px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;

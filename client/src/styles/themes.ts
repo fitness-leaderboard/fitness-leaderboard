@@ -30,7 +30,7 @@ const theme = {
     sm: `12px`,
     base: `16px`,
     subHeading: '20.5px',
-    heading: '32px',
+    heading: '48px',
   },
 
   spacing: {
