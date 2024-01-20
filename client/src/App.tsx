@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-// import LoginPage from './pages/LoginPage';
-import VerificationPage from './pages/VerificationPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import WelcomePage from './pages/WelcomePage';
+import SignupPage from './pages/Login/Signup/SignupPage';
+import WelcomePage from './pages/Login/Signup/WelcomePage';
+import VerificationPage from './pages/Login/Signup/VerificationPage';
+import PasswordPage from './pages/Login/Signup/PasswordPage';
 import NoPage from './pages/NoPage';
-import SignupPage from './pages/SignupPage';
-import PasswordPage from './pages/PasswordPage';
+// import LoginPage from './pages/LoginPage';
 
 function App() {
   return (

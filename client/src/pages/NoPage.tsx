@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, MainHeader, MainWrapper } from './LoginPageStyles';
+import { Container, MainHeader, MainWrapper } from '../styles/LoginPageStyles';
 
 export default function NoPage() {
   return (
