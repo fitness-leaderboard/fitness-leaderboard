@@ -15,11 +15,38 @@ import { useTheme } from './DarkThemeContex';
 export default function SignupPage() {
   const { darkMode } = useTheme();
   const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
 
   const navigate = useNavigate();
 
+  const passwordsMatch = (password: string, confirmPassword: string) => {
+    return password === confirmPassword;
+  };
+
+  const isValidPassword = (password: string) => {
+    /* Exhaust password validation rules and show what users need for a good password
+    Also try to allow google to make password?*/
+    return password.length >= 8 && password.length <= 20;
+  };
+
+  const handlePasswordChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfPwChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setConfirmPassword(event.target.value);
+  };
+
   const handleNextClick = () => {
-    if (isValidEmail(email)) {
+    if (
+      isValidEmail(email) &&
+      passwordsMatch(password, confirmPassword) &&
+      isValidPassword(password)
+    ) {
+      /**
+       * Prob will have to be some sort of await here
+       */
       navigate('/signup/verification');
     } else {
       console.error('Invalid email address');
@@ -46,6 +73,26 @@ export default function SignupPage() {
               darkMode={darkMode}
               value={email}
               onChange={handleInputChange}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <InputLabel darkMode={darkMode}>Password</InputLabel>
+            <Input
+              type='password'
+              placeholder='password'
+              darkMode={darkMode}
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <InputLabel darkMode={darkMode}>Confirm Password</InputLabel>
+            <Input
+              type='password'
+              placeholder='confirm password'
+              darkMode={darkMode}
+              value={confirmPassword}
+              onChange={handleConfPwChange}
             />
           </InputWrapper>
           <MainButton onClick={handleNextClick}>Next</MainButton>
