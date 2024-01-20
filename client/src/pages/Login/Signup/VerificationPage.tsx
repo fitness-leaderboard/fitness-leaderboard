@@ -10,9 +10,9 @@ import {
   InputWrapper,
   InputLabel,
   MainButton,
-} from './LoginPageStyles';
+} from '../../../styles/LoginPageStyles';
 import styled from 'styled-components';
-import theme from '../styles/themes';
+import theme from '../../../styles/themes';
 import { useNavigate } from 'react-router-dom';
 
 export default function VerificationPage() {

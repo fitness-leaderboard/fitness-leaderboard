@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import theme from '../styles/themes';
-import DarkThemeProps from './DarkTheme';
+import theme from './themes';
+import DarkThemeProps from '../props/DarkTheme';
 
 export const Container = styled.div<DarkThemeProps>`
   display: flex;

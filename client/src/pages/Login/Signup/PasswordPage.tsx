@@ -8,7 +8,7 @@ import {
   InputLabel,
   Input,
   MainButton,
-} from './LoginPageStyles';
+} from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
 
 export default function PasswordPage() {
