@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import theme from '../styles/themes';
 import DarkThemeProps from './DarkTheme';
 
-export const Container = styled.div`
+export const Container = styled.div<DarkThemeProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
   max-width: 100%;
   margin: 0 auto; /* Center the content */
+  background-color: ${props => (props.darkMode ? theme.colors.neuDarkGray : theme.colors.neuWhite)};
 `;
 
 export const LeftColumn = styled.div`
@@ -41,6 +42,9 @@ export const RightColumn = styled.div<DarkThemeProps>`
   flex: 0 0 40%;
   padding: 20px;
   background-color: ${props => (props.darkMode ? theme.colors.neuDarkGray : theme.colors.neuWhite)};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 400px;
 
   @media (max-width: 768px) {
@@ -49,16 +53,19 @@ export const RightColumn = styled.div<DarkThemeProps>`
   }
 `;
 
-export const FormWrapper = styled.div`
+export const MainWrapper = styled.div<DarkThemeProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 40px);
   width: 100%;
+  max-width: 450px;
+  padding: ${theme.spacing.base};
+  background-color: ${props => (props.darkMode ? theme.colors.neuDarkGray : theme.colors.neuWhite)};
 `;
 
-export const FormHeader = styled.h1<DarkThemeProps>`
+export const MainHeader = styled.h1<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
   font-size: ${theme.fontSizes.heading};
@@ -112,7 +119,7 @@ export const ForgotPasswordButton = styled.button<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
   font-size: ${theme.fontSizes.sm};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
-  margin: 10px 0 9px 0;
+  margin-top: 10px;
   align-self: flex-end;
   background-color: transparent;
   border: none;
@@ -126,10 +133,10 @@ export const LoginButton = styled.button`
   background-color: ${theme.colors.neuRed};
   border: none;
   border-radius: 10px;
+  margin-top: 10px;
   width: 100%;
   max-width: 250px;
   height: 32px;
-  margin: 0;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
@@ -138,6 +145,10 @@ export const LoginButton = styled.button`
     background-color: ${theme.colors.neuBrightRed};
     color: ${theme.colors.neuWhite};
   }
+`;
+
+export const MainButton = styled(LoginButton)`
+  margin-top: 20px;
 `;
 
 export const SignupText = styled.p<DarkThemeProps>`
