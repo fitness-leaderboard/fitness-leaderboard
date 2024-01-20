@@ -13,7 +13,7 @@ const theme = {
 
   colors: {
     neuRed: '#b00020',
-    neuBrightRed: '#be1827',
+    neuBrightRed: '#e30029',
     neuDarkGray: '#1a1a1b',
     neuBlack: '#100c08',
     neuWhite: '#f5f5f5',
@@ -30,7 +30,7 @@ const theme = {
     sm: `12px`,
     base: `16px`,
     subHeading: '20.5px',
-    heading: '27.5px',
+    heading: '32px',
   },
 
   spacing: {
