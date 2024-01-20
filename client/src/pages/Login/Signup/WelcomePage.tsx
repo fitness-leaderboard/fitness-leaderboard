@@ -19,9 +19,9 @@ import {
 import styled from 'styled-components';
 import theme from '../../../styles/themes';
 import { useNavigate } from 'react-router-dom';
-
+import { useTheme } from './DarkThemeContex';
 export default function WelcomePage() {
-  const [darkMode, setDarkMode] = React.useState(false);
+  const { darkMode, toggleDarkMode } = useTheme();
   const ToggleButton = styled.button`
     width: 200px;
     padding: 10px;
@@ -40,7 +40,7 @@ export default function WelcomePage() {
   return (
     <Container>
       <LeftColumn>
-        <ToggleButton onClick={() => setDarkMode(!darkMode)}>
+        <ToggleButton onClick={toggleDarkMode}>
           Toggle to {darkMode ? 'light' : 'dark'} mode
         </ToggleButton>
         <LogoContainer>

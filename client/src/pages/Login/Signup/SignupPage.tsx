@@ -10,9 +10,10 @@ import {
   MainButton,
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from './DarkThemeContex';
 
 export default function SignupPage() {
-  const [darkMode, setDarkMode] = React.useState(false);
+  const { darkMode } = useTheme();
   const [email, setEmail] = React.useState('');
 
   const navigate = useNavigate();
@@ -33,8 +34,8 @@ export default function SignupPage() {
     setEmail(event.target.value);
   };
   return (
-    <Container>
-      <MainWrapper>
+    <Container darkMode={darkMode}>
+      <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>Enter your Northeastern email to begin!</MainHeader>
         <InputContainer>
           <InputWrapper>

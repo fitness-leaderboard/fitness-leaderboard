@@ -10,9 +10,10 @@ import {
   MainButton,
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from './DarkThemeContex';
 
 export default function PasswordPage() {
-  const [darkMode, setDarkMode] = React.useState(false);
+  const { darkMode } = useTheme();
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
@@ -48,8 +49,8 @@ export default function PasswordPage() {
     setConfirmPassword(event.target.value);
   };
   return (
-    <Container>
-      <MainWrapper>
+    <Container darkMode={darkMode}>
+      <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>Almost there! Set your password to begin</MainHeader>
         <InputContainer>
           <h3>Email: jdoe@northeastern.edu</h3>

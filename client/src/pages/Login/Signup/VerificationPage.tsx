@@ -14,19 +14,11 @@ import {
 import styled from 'styled-components';
 import theme from '../../../styles/themes';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from './DarkThemeContex';
 
 export default function VerificationPage() {
-  const [darkMode, setDarkMode] = React.useState(false);
+  const { darkMode } = useTheme();
   const [verificationCode, setVerificationCode] = React.useState('');
-  const ToggleButton = styled.button`
-    width: 200px;
-    padding: 10px;
-    background-color: ${darkMode ? theme.colors.neuWhite : theme.colors.neuBlack};
-    color: ${darkMode ? theme.colors.neuBlack : theme.colors.neuWhite};
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  `;
   const navigate = useNavigate();
 
   const handleConfirmClick = () => {
@@ -45,8 +37,8 @@ export default function VerificationPage() {
     setVerificationCode(event.target.value);
   };
   return (
-    <Container>
-      <MainWrapper>
+    <Container darkMode={darkMode}>
+      <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>Enter the verification code sent to your email</MainHeader>
         <InputContainer>
           <h3>Email: jdoe@northeastern.edu</h3>
