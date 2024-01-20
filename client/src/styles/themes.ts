@@ -29,8 +29,9 @@ const theme = {
   fontSizes: {
     sm: `12px`,
     base: `16px`,
-    subHeading: '20.5px',
-    heading: '48px',
+    md: '24px',
+    lg: '32px',
+    xl: '44px',
   },
 
   spacing: {

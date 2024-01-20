@@ -72,11 +72,19 @@ export const MainWrapper = styled.div<DarkThemeProps>`
 export const MainHeader = styled.h1<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
-  font-size: ${theme.fontSizes.heading};
+  font-size: ${theme.fontSizes.xl};
   font-weight: bold;
   margin: 5px;
   display: inline-block;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: ${theme.fontSizes.lg};
+  }
+
+  @media (max-width: 400px) {
+    font-size: ${theme.fontSizes.md};
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -136,7 +144,7 @@ export const ForgotPasswordButton = styled.button<DarkThemeProps>`
 
 export const LoginButton = styled.button`
   font-family: ${theme.fonts.primary};
-  font-size: ${theme.fontSizes.subHeading};
+  font-size: ${theme.fontSizes.md};
   color: ${theme.colors.neuWhite};
   background-color: ${theme.colors.neuRed};
   border: none;
