@@ -1,21 +1,39 @@
-import { validateEmail } from "../../src/libraries/utils/emailValidation";
+import { INVALID_EMAIL_DOMAIN, INVALID_EMAIL_FORMAT, INVALID_EMPTY_PARAMETER } from '../../src/libraries/errors/InvalidParametersError'
+import { Email } from '../../src/libraries/types/Email'
 
-describe('validateEmail', () => {
-  it('Should return true for a valid northeastern.edu email', () => {
-    const validEmail = 'user@northeastern.edu';
-    const isValid = validateEmail(validEmail);
-    expect(isValid).toBe(true);
-  });
+describe('Testing for Email', () => {
+  it('Should be ok for a valid northeastern.edu email', () => {
+    expect(() => Email.create('test@northeastern.edu')).not.toThrow()
+    expect(() => Email.create('test@husky.neu.edu')).not.toThrow()
+  })
 
-  it('Should return false for an invalid email format', () => {
-    const invalidEmail = 'invalid-email';
-    const isValid = validateEmail(invalidEmail);
-    expect(isValid).toBe(false);
-  });
+  it('Should be ok for an email with different case', () => {
+    expect(() => Email.create('Test@northeastern.edu')).not.toThrow()
+    expect(() => Email.create('tEsT@Husky.Neu.Edu')).not.toThrow()
+  })
 
-  it('Should return false for an email with a different domain', () => {
-    const invalidDomainEmail = 'user@example.com';
-    const isValid = validateEmail(invalidDomainEmail);
-    expect(isValid).toBe(false);
-  });
-});
+  it('Should throw error for an email without NEU domain', () => {
+    expect(() => Email.create('test@northeastern.com')).toThrow(INVALID_EMAIL_DOMAIN)
+    expect(() => Email.create('test@husky.neu.com')).toThrow(INVALID_EMAIL_DOMAIN)
+  })
+
+  it('Should throw error for an invalid email format', () => {
+    expect(() => Email.create('test@northeastern')).toThrow(INVALID_EMAIL_FORMAT)
+  })
+
+  it('Should throw error for an email with a different domain', () => {
+    expect(() => Email.create('test@gmail.com')).toThrow(INVALID_EMAIL_DOMAIN)
+  })
+
+  it('Should throw error for an empty email', () => {
+    expect(() => Email.create('')).toThrow(INVALID_EMPTY_PARAMETER)
+  })
+
+  it('Should be ok for an email with special characters', () => {
+    expect(() => Email.create('john.doe+test@northeastern.edu')).not.toThrow()
+  })
+
+  it('Should throw error for an email with leading or trailing whitespace', () => {
+    expect(() => Email.create(' test@northeastern.edu ')).toThrow(INVALID_EMAIL_FORMAT)
+  })
+})
