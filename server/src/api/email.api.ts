@@ -29,7 +29,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
  * Sample Request: http://localhost:8080/verifyEmail?email=lin.kenn@northeastern.edu
  */
 export const verifyEmail = async (
-  req: Request,
+  req: Request, 
   res: Response,
   //next: NextFunction
 ) => {
