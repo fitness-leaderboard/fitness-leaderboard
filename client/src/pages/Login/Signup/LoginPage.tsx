@@ -20,7 +20,8 @@ import styled from 'styled-components';
 import theme from '../../../styles/themes';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
-export default function WelcomePage() {
+
+export default function LoginPage() {
   const { darkMode, toggleDarkMode } = useTheme();
   const ToggleButton = styled.button`
     width: 200px;
@@ -52,12 +53,12 @@ export default function WelcomePage() {
           <MainHeader darkMode={darkMode}>Welcome To Leaderboards!</MainHeader>
           <InputContainer>
             <InputWrapper>
-              <InputLabel darkMode={darkMode}>Email</InputLabel>
+              <InputLabel darkMode={darkMode}>Northeastern Email</InputLabel>
               <Input type='text' placeholder='doe.j@northeastern.edu' darkMode={darkMode}></Input>
             </InputWrapper>
             <InputWrapper>
               <InputLabel darkMode={darkMode}>Password</InputLabel>
-              <Input type='password' placeholder='abc123' darkMode={darkMode}></Input>
+              <Input type='password' placeholder='password' darkMode={darkMode}></Input>
             </InputWrapper>
             <ForgotPasswordButton darkMode={darkMode}>Forgot Password?</ForgotPasswordButton>
             <LoginButton>Login</LoginButton>
