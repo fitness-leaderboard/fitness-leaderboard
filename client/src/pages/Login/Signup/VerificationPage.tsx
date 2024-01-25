@@ -11,8 +11,6 @@ import {
   InputLabel,
   MainButton,
 } from '../../../styles/LoginPageStyles';
-import styled from 'styled-components';
-import theme from '../../../styles/themes';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
 
@@ -23,7 +21,7 @@ export default function VerificationPage() {
 
   const handleConfirmClick = () => {
     if (isValidCode(verificationCode)) {
-      navigate('/signup/password');
+      navigate('/homepage');
     } else {
       console.error('Invalid email address');
     }
@@ -41,7 +39,10 @@ export default function VerificationPage() {
       <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>Enter the verification code sent to your email</MainHeader>
         <InputContainer>
-          <h3>Email: jdoe@northeastern.edu</h3>
+          <InputWrapper>
+            <InputLabel darkMode={darkMode}>Email</InputLabel>
+            <Input type='text' darkMode={darkMode} value={'jdoe@northeastern.edu'} readOnly />
+          </InputWrapper>
           <InputWrapper>
             <InputLabel darkMode={darkMode}>Verification Code</InputLabel>
             <Input

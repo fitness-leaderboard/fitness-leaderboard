@@ -53,7 +53,10 @@ export default function PasswordPage() {
       <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>Almost there! Set your password to begin</MainHeader>
         <InputContainer>
-          <h3>Email: jdoe@northeastern.edu</h3>
+          <InputWrapper>
+            <InputLabel darkMode={darkMode}>Email</InputLabel>
+            <Input type='text' darkMode={darkMode} value={'jdoe@northeastern.edu'} readOnly />
+          </InputWrapper>
           <InputWrapper>
             <InputLabel darkMode={darkMode}>Password</InputLabel>
             <Input
