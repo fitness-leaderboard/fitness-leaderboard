@@ -144,7 +144,7 @@ export const ForgotPasswordButton = styled.button<DarkThemeProps>`
 
 export const LoginButton = styled.button`
   font-family: ${theme.fonts.primary};
-  font-size: ${theme.fontSizes.md};
+  font-size: ${theme.fontSizes.base};
   color: ${theme.colors.neuWhite};
   background-color: ${theme.colors.neuRed};
   border: none;
