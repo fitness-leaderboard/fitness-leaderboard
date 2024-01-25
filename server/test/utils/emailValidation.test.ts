@@ -1,5 +1,6 @@
 import { INVALID_EMAIL_DOMAIN, INVALID_EMAIL_FORMAT, INVALID_EMPTY_PARAMETER } from '../../src/libraries/errors/InvalidParametersError'
-import { Email } from '../../src/libraries/types/Email'
+import { Athlete } from '../../src/libraries/model/Athlete';
+import { Email } from '../../src/libraries/model/Email'
 
 describe('Testing for Email', () => {
   it('Should be ok for a valid northeastern.edu email', () => {
@@ -37,3 +38,20 @@ describe('Testing for Email', () => {
     expect(() => Email.create(' test@northeastern.edu ')).toThrow(INVALID_EMAIL_FORMAT)
   })
 })
+
+describe('UserManager', () => {
+  let testUser;
+  let email;
+
+  beforeEach(() => {
+    email = { value: 'valid_email' };
+    testUser = new Athlete(1, 'Test', 'User', 'Male', 'testuser', email);
+  });
+
+  describe('sendVerificationEmail', () => {
+    it('should send a verification email', async () => {
+      await testUser.sendVerificationEmail();
+      expect(testUser.tokenState.getToken('VerifyEmail')).toBeDefined();
+    });
+  });
+});

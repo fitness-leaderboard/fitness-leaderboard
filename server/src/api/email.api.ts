@@ -7,12 +7,9 @@ import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
-import { Email } from '../libraries/types/Email'
+import { Email } from '../libraries/model/Email'
 
 dotenv.config()
-
-const verifyEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/verifyEmail.html'), 'utf8')
-const forgotPasswordEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/forgotPassword.html'), 'utf8')
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -26,7 +23,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
  * The HTML content of the email is set to the 'verifyEmailHtml' constant.
  *
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
- * Sample Request: http://localhost:8080/verifyEmail?email=lin.kenn@northeastern.edu
+ * Sample Request: http://localhost:8080/verifyEmail?email=lin.kenn@northeastern.edu&token=NU2024
  */
 export const verifyEmail = async (
   req: Request, 
@@ -34,27 +31,39 @@ export const verifyEmail = async (
   //next: NextFunction
 ) => {
   const receipientEmail = req.query.email as string
+  const Token = req.query.token as string
 
   if (!receipientEmail) {
     return res.status(400).json({ error: 'No receipient email provided' })
   }
 
-  if (!Email.create(receipientEmail)) {
-    return res.status(400).json({ error: 'Invalid email domain. Must be northeastern.edu' })
+  if (!Token) {
+    return res.status(400).json({ error: 'No token provided' })
   }
 
+  if (!Email.create(receipientEmail)) {
+    return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
+  }
+
+  if (Token.length !== 6 || !Token.match(/^[0-9A-Z]+$/)) {
+    return res.status(400).json({ error: 'Invalid token provided. Must be six characters and contain only 0-9A-Z' })
+  }
+
+  const verifyEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/verifyEmail.html'), 'utf8').replace('verifyTokenPlaceholder', Token)
+  const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
+
   const { data, error } = await resend.emails.send({
-    from: `Husky Pack <husky-leaderboard@>${process.env.TEST_DOMAIN}`,
-    to: receipientEmail[0],
+    from: fromEmail,
+    to: receipientEmail,
     subject: 'Join the Pack',
     html: verifyEmailHtml
   })
 
   if (error) {
     return res.status(400).json({ error })
+  } else {
+    res.status(200).json({ data, message: `Email sent to ${receipientEmail} with token ${Token}! from: ${fromEmail}` })
   }
-
-  res.status(200).json({ data })
 }
 
 /**
@@ -79,8 +88,10 @@ export const forgotPasswordEmail = async (
     return res.status(400).json({ error: 'No receipient email provided' })
   }
 
+  const forgotPasswordEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/forgotPassword.html'), 'utf8')
+
   const { data, error } = await resend.emails.send({
-    from: 'Husky Pack <husky-leaderboard@kenny-lin.me>',
+    from: `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`,
     to: receipientEmail[0],
     subject: 'Join the Pack',
     html: forgotPasswordEmailHtml
