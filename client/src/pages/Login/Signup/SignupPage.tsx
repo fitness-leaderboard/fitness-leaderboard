@@ -8,6 +8,8 @@ import {
   InputLabel,
   Input,
   MainButton,
+  SignupButton,
+  SignupText,
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
@@ -53,6 +55,10 @@ export default function SignupPage() {
     }
   };
 
+  const handleSigninClick = () => {
+    navigate('/login');
+  };
+
   const isValidEmail = (email: string) => {
     return email.includes('@northeastern.edu');
   };
@@ -63,7 +69,7 @@ export default function SignupPage() {
   return (
     <Container darkMode={darkMode}>
       <MainWrapper darkMode={darkMode}>
-        <MainHeader darkMode={darkMode}>Enter your Northeastern email to begin!</MainHeader>
+        <MainHeader darkMode={darkMode}>Sign up!</MainHeader>
         <InputContainer>
           <InputWrapper>
             <InputLabel darkMode={darkMode}>Email</InputLabel>
@@ -96,6 +102,9 @@ export default function SignupPage() {
             />
           </InputWrapper>
           <MainButton onClick={handleNextClick}>Next</MainButton>
+          <SignupText darkMode={darkMode}>
+            Have an account? <SignupButton onClick={handleSigninClick}>Sign in</SignupButton>
+          </SignupText>
         </InputContainer>
       </MainWrapper>
     </Container>
