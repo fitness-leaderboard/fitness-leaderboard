@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, MainHeader, MainWrapper } from '../styles/LoginPageStyles';
 import { useTheme } from './Login/Signup/DarkThemeContex';
+import { Link } from 'react-router-dom';
 
 export default function NoPage() {
   const { darkMode } = useTheme();
@@ -8,7 +9,8 @@ export default function NoPage() {
     <Container darkMode={darkMode}>
       <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>
-          Error 404, Sorry, the page you are looking for does not exist.
+          Error 404, Sorry, the page you are looking for does not exist. Try going to{' '}
+          <Link to='/'>Login</Link>
         </MainHeader>
       </MainWrapper>
     </Container>
