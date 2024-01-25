@@ -13,19 +13,48 @@ dotenv.config()
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+
 /**
- * verifyEmail
+ * validEmailFormat
+ * 
+ * This is an asynchronous function that handles the '/validEmailFormat' route.
  *
- * This is an asynchronous function that handles the '/verifyEmail' route.
+ * It validates the email address provided in the query parameters.
+ * 
+ * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
+ * Sample Request: http://localhost:8080/validEmailFormat?email=lin.kenn@northeastern.edu
+ */
+export const validEmailFormat = async (
+  req: Request, 
+  res: Response,
+  //next: NextFunction
+) => {
+  const email = req.query.email as string
+
+  if (!email) {
+    return res.status(400).json({ error: 'No email provided' })
+  }
+
+  if (!Email.create(email)) {
+    return res.status(400).json({ error: 'Invalid email format' })
+  }
+
+  res.status(200).json({ message: 'Valid email format' })
+}
+
+
+/**
+ * sendVerificationEmail
+ *
+ * This is an asynchronous function that handles the '/sendVerificationEmail' route.
  *
  * It sends a verification email to the email address provided in the query parameters.
  * It first validates the email address, and if it's valid, it sends the email using the 'resend.emails.send' method.
- * The HTML content of the email is set to the 'verifyEmailHtml' constant.
  *
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
- * Sample Request: http://localhost:8080/verifyEmail?email=lin.kenn@northeastern.edu&token=NU2024
+ * Sample Request: http://localhost:8080/sendVerificationEmail?email=lin.kenn@northeastern.edu&token=NU2024
  */
-export const verifyEmail = async (
+export const sendVerificationEmail = async (
   req: Request, 
   res: Response,
   //next: NextFunction
@@ -67,18 +96,18 @@ export const verifyEmail = async (
 }
 
 /**
- * forgotPasswordEmail
+ * sendForgotPasswordEmail
  *
- * This is an asynchronous function that handles the '/forgotPasswordEmail' route.
+ * This is an asynchronous function that handles the '/sendForgotPasswordEmail' route.
  *
  * It sends a password reset email to the email address provided in the query parameters.
  * It first validates the email address, and if it's valid, it sends the email using the 'resend.emails.send' method.
- * The HTML content of the email is set to the 'forgotPasswordEmailHtml' constant.
+ * The HTML content of the email is set to the 'sendForgotPasswordEmailHtml' constant.
  *
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
- * Sample Request: http://localhost:8080/forgotPasswordEmail?email=lin.kenn@northeastern.edu
+ * Sample Request: http://localhost:8080/sendForgotPasswordEmail?email=lin.kenn@northeastern.edu
  */
-export const forgotPasswordEmail = async (
+export const sendForgotPasswordEmail = async (
   req: Request,
   res: Response,
   //next: NextFunction
