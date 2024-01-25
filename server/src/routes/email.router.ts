@@ -5,6 +5,7 @@ import { Router } from 'express'
  * It uses Express Router to create a new router instance and import the necessary
  * handlers from the 'email.api' module.
  *
+ * GET /validEmailFormat
  * GET /sendVerificationEmail
  * GET /sendForgotPasswordEmail
 */
