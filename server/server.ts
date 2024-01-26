@@ -6,7 +6,6 @@ import rootRoutes from './src/routes/util.router'
 import cors from 'cors'
 
 const app = express()
-const PORT = process.env.PORT || 8080;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -17,9 +16,8 @@ app.use(userRoutes)
 app.use(rootRoutes)
 
 app.listen(
-  PORT,
+  process.env.PORT || 8080,
   () => { console.log(`Listening on http://localhost:${PORT}`) }
 )
 
 export default app
-  
