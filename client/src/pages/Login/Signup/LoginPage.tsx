@@ -45,7 +45,7 @@ export default function LoginPage() {
           Toggle to {darkMode ? 'light' : 'dark'} mode
         </ToggleButton>
         <LogoContainer>
-          <LogoImage src='/neulogo.png' width={250} alt='Leaderboards Logo' />
+          <LogoImage src='/buff-husky.png' width={250} alt='Leaderboards Logo' />
         </LogoContainer>
       </LeftColumn>
       <RightColumn darkMode={darkMode}>

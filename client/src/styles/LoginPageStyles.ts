@@ -36,6 +36,7 @@ export const LogoContainer = styled.div`
 export const LogoImage = styled.img`
   width: 100%;
   max-width: 350px;
+  border-radius: 100%;
 `;
 
 export const RightColumn = styled.div<DarkThemeProps>`
