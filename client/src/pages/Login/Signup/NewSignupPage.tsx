@@ -11,12 +11,14 @@ import {
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
+import { useLocation } from 'react-router-dom';
 
-export default function SignupPage() {
+export default function NewSignupPage() {
   const { darkMode } = useTheme();
-  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const location = useLocation();
+  const email = location.state.email;
 
   const navigate = useNavigate();
 
@@ -25,9 +27,10 @@ export default function SignupPage() {
   };
 
   const isValidPassword = (password: string) => {
-    /* Exhaust password validation rules and show what users need for a good password
-    Also try to allow google to make password?*/
-    return password.length >= 8 && password.length <= 20;
+    // Minimum eight characters, at least one letter, one number and one special character
+    //const validPasswordRegex = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
+    const validPasswordRegex = ".{8,}";
+    return password.match(validPasswordRegex) !== null;
   };
 
   const handlePasswordChange = (event: { target: { value: React.SetStateAction<string> } }) => {
@@ -40,41 +43,36 @@ export default function SignupPage() {
 
   const handleNextClick = () => {
     if (
-      isValidEmail(email) &&
       passwordsMatch(password, confirmPassword) &&
       isValidPassword(password)
     ) {
-      /**
-       * Prob will have to be some sort of await here
-       */
-      navigate('/signup/verification');
+      fetch('http://localhost:8080/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email as string,
+          password: password,
+        }),
+      })
+      .then(data => {
+        console.log(data);
+        navigate('/emailsignup/verification', { state: { email: email } });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     } else {
-      console.error('Invalid email address');
+      console.log(`Invalid password, ${password}`);
     }
   };
 
-  const isValidEmail = (email: string) => {
-    return email.includes('@northeastern.edu');
-  };
-
-  const handleInputChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setEmail(event.target.value);
-  };
   return (
     <Container darkMode={darkMode}>
       <MainWrapper darkMode={darkMode}>
-        <MainHeader darkMode={darkMode}>Enter your Northeastern email to begin!</MainHeader>
+      <MainHeader darkMode={darkMode}>{email}</MainHeader>
         <InputContainer>
-          <InputWrapper>
-            <InputLabel darkMode={darkMode}>Email</InputLabel>
-            <Input
-              type='text'
-              placeholder='doe.j@northeastern.edu'
-              darkMode={darkMode}
-              value={email}
-              onChange={handleInputChange}
-            />
-          </InputWrapper>
           <InputWrapper>
             <InputLabel darkMode={darkMode}>Password</InputLabel>
             <Input
@@ -95,7 +93,7 @@ export default function SignupPage() {
               onChange={handleConfPwChange}
             />
           </InputWrapper>
-          <MainButton onClick={handleNextClick}>Next</MainButton>
+          <MainButton onClick={handleNextClick}>Register</MainButton>
         </InputContainer>
       </MainWrapper>
     </Container>

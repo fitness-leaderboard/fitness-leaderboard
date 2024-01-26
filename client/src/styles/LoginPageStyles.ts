@@ -192,3 +192,13 @@ export const SignupButton = styled.button`
     color: ${theme.colors.neuBrightRed};
   }
 `;
+
+
+export const SubTextLabel = styled.p<DarkThemeProps>`
+  font-family: ${theme.fonts.primary};
+  font-size: ${theme.fontSizes.sm};
+  color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
+  font-size: 0.8em;
+  margin-top: ${theme.spacing.none};
+  margin-bottom: ${theme.spacing.none};
+`;
