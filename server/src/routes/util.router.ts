@@ -6,4 +6,8 @@ router.get('/', (req, res) => {
   res.status(200).send('Email API is running')
 })
 
+router.get('/favicon.ico', (req, res) => {
+  res.status(200).send('Email API is running')
+})
+
 export default router
