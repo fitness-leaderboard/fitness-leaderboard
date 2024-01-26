@@ -15,11 +15,15 @@ import styled from 'styled-components';
 import theme from '../../../styles/themes';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
+import { useLocation } from 'react-router-dom';
 
 export default function VerificationPage() {
   const { darkMode } = useTheme();
   const [verificationCode, setVerificationCode] = React.useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+
+  const location = useLocation();
+  const email = location.state.email;
 
   const handleConfirmClick = () => {
     if (isValidCode(verificationCode)) {
@@ -41,7 +45,7 @@ export default function VerificationPage() {
       <MainWrapper darkMode={darkMode}>
         <MainHeader darkMode={darkMode}>Enter the verification code sent to your email</MainHeader>
         <InputContainer>
-          <h3>Email: jdoe@northeastern.edu</h3>
+          <h3>Email: {email}</h3>
           <InputWrapper>
             <InputLabel darkMode={darkMode}>Verification Code</InputLabel>
             <Input
