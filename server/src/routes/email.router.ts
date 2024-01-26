@@ -5,17 +5,20 @@ import { Router } from 'express'
  * It uses Express Router to create a new router instance and import the necessary
  * handlers from the 'email.api' module.
  *
- * GET /verifyEmail
- * GET /forgotPasswordEmail
+ * GET /validEmailFormat
+ * GET /sendVerificationEmail
+ * GET /sendForgotPasswordEmail
 */
 import {
-  verifyEmail,
-  forgotPasswordEmail
+  validEmailFormat,
+  sendVerificationEmail,
+  sendForgotPasswordEmail
 } from '../api/email.api'
 
 const router = Router()
 
-router.get('/verifyEmail', verifyEmail)
-router.get('/forgotPasswordEmail', forgotPasswordEmail)
+router.get('/validEmailFormat', validEmailFormat)
+router.get('/sendVerificationEmail', sendVerificationEmail)
+router.get('/sendForgotPasswordEmail', sendForgotPasswordEmail)
 
 export default router
