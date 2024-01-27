@@ -13,11 +13,15 @@ import {
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
+import { useLocation } from 'react-router-dom';
 
 export default function VerificationPage() {
   const { darkMode } = useTheme();
   const [verificationCode, setVerificationCode] = React.useState('');
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const email = location.state.email;
 
   const handleConfirmClick = () => {
     if (isValidCode(verificationCode)) {

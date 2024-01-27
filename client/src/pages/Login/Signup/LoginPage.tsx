@@ -36,7 +36,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleSignupClick = () => {
-    navigate('/signup');
+    navigate('/emailsignup');
   };
   return (
     <Container>
