@@ -31,9 +31,6 @@ export const validEmailFormat = async (
 ) => {
   const email = req.query.email as string
 
-  if (!email) {
-    return res.status(400).json({ error: 'No email provided' })
-  }
   try { 
     !Email.create(email) 
   } catch (error) {
@@ -64,15 +61,15 @@ export const sendVerificationEmail = async (
   const Token = req.query.token as string
   const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
 
-  if (!receipientEmail) {
-    return res.status(400).json({ error: 'No receipient email provided' })
-  }
-
-  if (!Token) {
-    return res.status(400).json({ error: 'No token provided' })
-  }
-
   try {
+    if (!receipientEmail) {
+      return res.status(400).json({ error: 'No receipient email provided' })
+    }
+
+    if (!Token) {
+      return res.status(400).json({ error: 'No token provided' })
+    }
+    
     if (!Email.create(receipientEmail)) {
       return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
     }
