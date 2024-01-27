@@ -17,7 +17,7 @@ app.use(rootRoutes)
 
 app.listen(
   process.env.PORT || 8080,
-  () => { console.log(`Listening on http://localhost:${PORT}`) }
+  () => { console.log(`Listening on http://localhost:8080`) }
 )
 
 export default app
