@@ -5,8 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "ts-node --transpile-only server.ts",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "build":"webpack"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "heroku"
