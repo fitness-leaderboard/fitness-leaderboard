@@ -23,6 +23,7 @@ function App() {
           <Route path='verification' element={<VerificationPage />} />
           <Route path='password' element={<PasswordPage />} />
         </Route>
+        <Route path='/signup' element={<SignupPage />} />
         <Route path='*' element={<NoPage />} />{' '}
       </Routes>
     </BrowserRouter>

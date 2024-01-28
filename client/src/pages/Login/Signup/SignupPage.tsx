@@ -10,6 +10,7 @@ import {
   MainButton,
   SignupButton,
   SignupText,
+  SubTextLabel,
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './DarkThemeContex';
@@ -17,6 +18,7 @@ import { useTheme } from './DarkThemeContex';
 export default function SignupPage() {
   const { darkMode } = useTheme();
   const [email, setEmail] = React.useState('');
+  const [error, setError] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
@@ -40,27 +42,24 @@ export default function SignupPage() {
     setConfirmPassword(event.target.value);
   };
 
-  const handleNextClick = () => {
-    if (
-      isValidEmail(email) &&
-      passwordsMatch(password, confirmPassword) &&
-      isValidPassword(password)
-    ) {
-      /**
-       * Prob will have to be some sort of await here
-       */
-      navigate('/signup/verification');
-    } else {
-      console.error('Invalid email address');
-    }
+  const handleNextClick = async () => {
+    await fetch(`http://localhost:8080/validEmailFormat?email=${email}`)
+      .then(response => {
+        if (response.status === 200) {
+          if (passwordsMatch(password, confirmPassword) && isValidPassword(password)) {
+            navigate('/emailsignup/newsignup', { state: { email: email } });
+          }
+        } else if (response.status === 400) {
+          setError('Invalid email format');
+        }
+      })
+      .catch(error => {
+        setError(error.message);
+      });
   };
 
   const handleSigninClick = () => {
     navigate('/login');
-  };
-
-  const isValidEmail = (email: string) => {
-    return email.includes('@northeastern.edu');
   };
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string> } }) => {
@@ -72,30 +71,28 @@ export default function SignupPage() {
         <MainHeader darkMode={darkMode}>Sign up!</MainHeader>
         <InputContainer>
           <InputWrapper>
-            <InputLabel darkMode={darkMode}>Email</InputLabel>
             <Input
               type='text'
-              placeholder='doe.j@northeastern.edu'
+              placeholder='Northeastern Email'
               darkMode={darkMode}
               value={email}
               onChange={handleInputChange}
             />
           </InputWrapper>
+          {/* {error && <SubTextLabel darkMode={darkMode}>{error}</SubTextLabel>} */}
           <InputWrapper>
-            <InputLabel darkMode={darkMode}>Password</InputLabel>
             <Input
               type='password'
-              placeholder='password'
+              placeholder='Password'
               darkMode={darkMode}
               value={password}
               onChange={handlePasswordChange}
             />
           </InputWrapper>
           <InputWrapper>
-            <InputLabel darkMode={darkMode}>Confirm Password</InputLabel>
             <Input
               type='password'
-              placeholder='confirm password'
+              placeholder='Confirm Password'
               darkMode={darkMode}
               value={confirmPassword}
               onChange={handleConfPwChange}

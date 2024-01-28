@@ -102,6 +102,7 @@ export const InputWrapper = styled.div`
   flex-direction: column;
   position: relative;
   width: 100%;
+  margin: 5px;
 `;
 
 export const InputLabel = styled.label<DarkThemeProps>`
@@ -194,12 +195,11 @@ export const SignupButton = styled.button`
   }
 `;
 
-
 export const SubTextLabel = styled.p<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
   font-size: ${theme.fontSizes.sm};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
   font-size: 0.8em;
-  margin-top: ${theme.spacing.none};
+  margin-top: ${theme.spacing.sm};
   margin-bottom: ${theme.spacing.none};
 `;
