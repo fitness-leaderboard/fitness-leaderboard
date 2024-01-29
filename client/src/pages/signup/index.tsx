@@ -3,14 +3,8 @@ import {
   Container,
   MainWrapper,
   MainHeader,
-  InputContainer,
-  InputWrapper,
-  InputLabel,
-  Input,
-  MainButton,
   SignupButton,
   SignupText,
-  SubTextLabel,
 } from '../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../props/DarkThemeContex';

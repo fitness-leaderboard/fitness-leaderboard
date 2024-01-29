@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Input,
-  LoginButton,
   MainHeader,
   MainWrapper,
   LeftColumn,
@@ -11,11 +9,6 @@ import {
   RightColumn,
   LogoImage,
   LogoContainer,
-  ForgotPasswordButton,
-  InputContainer,
-  InputWrapper,
-  InputLabel,
-  Form,
 } from '../../styles/LoginPageStyles';
 import styled from 'styled-components';
 import theme from '../../styles/themes';
