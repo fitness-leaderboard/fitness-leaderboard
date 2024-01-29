@@ -87,6 +87,15 @@ export const MainHeader = styled.h1<DarkThemeProps>`
   }
 `;
 
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 85%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -192,7 +201,6 @@ export const SignupButton = styled.button`
     color: ${theme.colors.neuBrightRed};
   }
 `;
-
 
 export const SubTextLabel = styled.p<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
