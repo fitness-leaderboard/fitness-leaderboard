@@ -45,18 +45,17 @@ export const validEmailFormat = async (
 export const postUser = async (req: Request, res: Response) => {
   try {
     const receipientEmail = req.body.email;
-    console.log(receipientEmail);
+    const recipientPassword = req.body.password;
+
     const user = await prisma.user.create({
       data: {
         email: receipientEmail as string,
-        password: '12345678',
+        password: recipientPassword as string,
       },
     });
-    res.json(receipientEmail);
     res.json(user);
   } catch (error) {
     console.error(error.message);
-    // return res.status(400).json({ message: error.message });
   }
 };
 
