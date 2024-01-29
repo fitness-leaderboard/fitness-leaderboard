@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignupPage from './pages/Login/Signup/SignupPage';
 import LoginPage from './pages/Login/Signup/LoginPage';
@@ -17,13 +16,11 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='emailsignup'>
-          <Route index element={<EmailSignupPage />} />
-          <Route path='newsignup' element={<NewSignupPage />} />
+        <Route path='signup'>
+          <Route index element={<SignupPage />} />
           <Route path='verification' element={<VerificationPage />} />
           <Route path='password' element={<PasswordPage />} />
         </Route>
-        <Route path='/signup' element={<SignupPage />} />
         <Route path='*' element={<NoPage />} />{' '}
       </Routes>
     </BrowserRouter>

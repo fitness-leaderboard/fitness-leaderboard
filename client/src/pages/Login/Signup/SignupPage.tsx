@@ -47,7 +47,7 @@ export default function SignupPage() {
       .then(response => {
         if (response.status === 200) {
           if (passwordsMatch(password, confirmPassword) && isValidPassword(password)) {
-            navigate('/emailsignup/newsignup', { state: { email: email } });
+            navigate('/signup/verification', { state: { email: email } });
           }
         } else if (response.status === 400) {
           setError('Invalid email format');

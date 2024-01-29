@@ -29,7 +29,7 @@ export default function NewSignupPage() {
   const isValidPassword = (password: string) => {
     // Minimum eight characters, at least one letter, one number and one special character
     //const validPasswordRegex = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
-    const validPasswordRegex = ".{8,}";
+    const validPasswordRegex = '.{8,}';
     return password.match(validPasswordRegex) !== null;
   };
 
@@ -42,10 +42,7 @@ export default function NewSignupPage() {
   };
 
   const handleNextClick = () => {
-    if (
-      passwordsMatch(password, confirmPassword) &&
-      isValidPassword(password)
-    ) {
+    if (passwordsMatch(password, confirmPassword) && isValidPassword(password)) {
       fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: {
@@ -56,13 +53,13 @@ export default function NewSignupPage() {
           password: password,
         }),
       })
-      .then(data => {
-        console.log(data);
-        navigate('/emailsignup/verification', { state: { email: email } });
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then(data => {
+          console.log(data);
+          navigate('/emailsignup/verification', { state: { email: email } });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     } else {
       console.log(`Invalid password, ${password}`);
     }
@@ -71,7 +68,7 @@ export default function NewSignupPage() {
   return (
     <Container darkMode={darkMode}>
       <MainWrapper darkMode={darkMode}>
-      <MainHeader darkMode={darkMode}>{email}</MainHeader>
+        <MainHeader darkMode={darkMode}>{email}</MainHeader>
         <InputContainer>
           <InputWrapper>
             <InputLabel darkMode={darkMode}>Password</InputLabel>

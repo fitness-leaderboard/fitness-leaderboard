@@ -25,7 +25,7 @@ export default function EmailSignupPage() {
     await fetch(`http://localhost:8080/validEmailFormat?email=${email}`)
       .then(response => {
         if (response.status === 200) {
-          navigate('/emailsignup/newsignup', { state: { email: email } });
+          navigate('/signup/newsignup', { state: { email: email } });
         }
       })
       .catch(error => {
@@ -52,7 +52,7 @@ export default function EmailSignupPage() {
               onChange={handleInputChange}
             />
           </InputWrapper>
-          <SubTextLabel darkMode={darkMode}>{error && <p>{error}</p>}</SubTextLabel>
+          {error && <SubTextLabel darkMode={darkMode}>{error}</SubTextLabel>}
           <MainButton onClick={handleNextClick}>Next</MainButton>
         </InputContainer>
       </MainWrapper>
