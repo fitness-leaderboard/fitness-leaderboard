@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, MainHeader, MainWrapper } from '../styles/LoginPageStyles';
-import { useTheme } from './Login/Signup/DarkThemeContex';
+import { useTheme } from './Signup/DarkThemeContex';
 import { Link } from 'react-router-dom';
 
 export default function NoPage() {
