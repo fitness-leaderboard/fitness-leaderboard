@@ -15,11 +15,13 @@ import {
   InputContainer,
   InputWrapper,
   InputLabel,
+  Form,
 } from '../../styles/LoginPageStyles';
 import styled from 'styled-components';
 import theme from '../../styles/themes';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../props/DarkThemeContex';
+import LoginForm from './LoginForm';
 
 export default function LoginPage() {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -51,22 +53,10 @@ export default function LoginPage() {
       <RightColumn darkMode={darkMode}>
         <MainWrapper darkMode={darkMode}>
           <MainHeader darkMode={darkMode}>Welcome To Leaderboards!</MainHeader>
-          <InputContainer>
-            <InputWrapper>
-              <InputLabel darkMode={darkMode}>Northeastern Email</InputLabel>
-              <Input type='text' placeholder='doe.j@northeastern.edu' darkMode={darkMode}></Input>
-            </InputWrapper>
-            <InputWrapper>
-              <InputLabel darkMode={darkMode}>Password</InputLabel>
-              <Input type='password' placeholder='password' darkMode={darkMode}></Input>
-            </InputWrapper>
-            <ForgotPasswordButton darkMode={darkMode}>Forgot Password?</ForgotPasswordButton>
-            <LoginButton>Login</LoginButton>
-            <SignupText darkMode={darkMode}>
-              Don't have an account?{' '}
-              <SignupButton onClick={handleSignupClick}>Sign up</SignupButton>
-            </SignupText>
-          </InputContainer>
+          <LoginForm />
+          <SignupText darkMode={darkMode}>
+            Don't have an account? <SignupButton onClick={handleSignupClick}>Sign up</SignupButton>
+          </SignupText>
         </MainWrapper>
       </RightColumn>
     </Container>

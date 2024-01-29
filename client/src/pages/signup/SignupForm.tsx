@@ -1,28 +1,26 @@
 import React from 'react';
 import {
-  Container,
-  MainWrapper,
-  MainHeader,
+  InformativeBox,
+  Form,
+  Input,
   InputContainer,
   InputWrapper,
-  InputLabel,
-  Input,
   MainButton,
-  SignupButton,
-  SignupText,
   SubTextLabel,
 } from '../../styles/LoginPageStyles';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../props/DarkThemeContex';
+import { useNavigate } from 'react-router-dom';
+import CheckIcon from '../../icons/CheckIcon';
+import XIcon from '../../icons/XIcon';
 
-export default function SignupPage() {
+function SignupForm() {
   const { darkMode } = useTheme();
+  const navigate = useNavigate();
+
   const [email, setEmail] = React.useState('');
   const [error, setError] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
-
-  const navigate = useNavigate();
 
   const passwordsMatch = (password: string, confirmPassword: string) => {
     return password === confirmPassword;
@@ -42,7 +40,8 @@ export default function SignupPage() {
     setConfirmPassword(event.target.value);
   };
 
-  const handleNextClick = async () => {
+  const handleSubmitSignUp = async (event: any) => {
+    event.preventDefault();
     await fetch(`http://localhost:8080/validEmailFormat?email=${email}`)
       .then(response => {
         if (response.status === 200) {
@@ -54,56 +53,55 @@ export default function SignupPage() {
         }
       })
       .catch(error => {
-        setError(error.message);
+        console.error('Error:', error);
       });
-  };
-
-  const handleSigninClick = () => {
-    navigate('/login');
   };
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setEmail(event.target.value);
   };
   return (
-    <Container darkMode={darkMode}>
-      <MainWrapper darkMode={darkMode}>
-        <MainHeader darkMode={darkMode}>Sign up!</MainHeader>
-        <InputContainer>
-          <InputWrapper>
-            <Input
-              type='text'
-              placeholder='Northeastern Email'
-              darkMode={darkMode}
-              value={email}
-              onChange={handleInputChange}
-            />
-          </InputWrapper>
+    <Form action='#' method='post' onSubmit={handleSubmitSignUp}>
+      <InputContainer>
+        <InputWrapper>
+          <Input
+            type='text'
+            placeholder='Northeastern Email'
+            darkMode={darkMode}
+            value={email}
+            onChange={handleInputChange}
+          />
+          <InformativeBox>{error && <XIcon width={36} height={36} />}</InformativeBox>
           {/* {error && <SubTextLabel darkMode={darkMode}>{error}</SubTextLabel>} */}
-          <InputWrapper>
-            <Input
-              type='password'
-              placeholder='Password'
-              darkMode={darkMode}
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              type='password'
-              placeholder='Confirm Password'
-              darkMode={darkMode}
-              value={confirmPassword}
-              onChange={handleConfPwChange}
-            />
-          </InputWrapper>
-          <MainButton onClick={handleNextClick}>Next</MainButton>
-          <SignupText darkMode={darkMode}>
-            Have an account? <SignupButton onClick={handleSigninClick}>Sign in</SignupButton>
-          </SignupText>
-        </InputContainer>
-      </MainWrapper>
-    </Container>
+        </InputWrapper>
+        <InputWrapper>
+          <Input
+            type='password'
+            placeholder='Password'
+            darkMode={darkMode}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <InformativeBox>
+            <XIcon width={36} height={36} />
+          </InformativeBox>
+        </InputWrapper>
+        <InputWrapper>
+          <Input
+            type='password'
+            placeholder='Confirm Password'
+            darkMode={darkMode}
+            value={confirmPassword}
+            onChange={handleConfPwChange}
+          />
+          <InformativeBox>
+            <CheckIcon width={36} height={36} />
+          </InformativeBox>
+        </InputWrapper>
+        <MainButton type='submit'>Next</MainButton>
+      </InputContainer>
+    </Form>
   );
 }
+
+export default SignupForm;

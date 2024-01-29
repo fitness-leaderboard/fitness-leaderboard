@@ -72,9 +72,9 @@ export const MainWrapper = styled.div<DarkThemeProps>`
 export const MainHeader = styled.h1<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
-  font-size: ${theme.fontSizes.xl};
+  font-size: ${theme.fontSizes.lg};
   font-weight: bold;
-  margin: 5px;
+  margin: 10px;
   display: inline-block;
   text-align: center;
 
@@ -87,7 +87,7 @@ export const MainHeader = styled.h1<DarkThemeProps>`
   }
 `;
 
-export const InputContainer = styled.div`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -96,12 +96,13 @@ export const InputContainer = styled.div`
   align-items: center;
 `;
 
-export const InputWrapper = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 100%;
-  margin: 5px;
+  width: 85%;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const InputLabel = styled.label<DarkThemeProps>`
@@ -113,24 +114,57 @@ export const InputLabel = styled.label<DarkThemeProps>`
   margin-bottom: 3px;
 `;
 
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 5px;
+  padding: 6px 13px;
+  border: 1px solid ${theme.colors.neuRed};
+  border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+  &:focus-within {
+    outline: 2px solid ${theme.colors.neuBrightRed};
+  }
+`;
+
+export const InputIcon = styled.img`
+  flex: 0 100%;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+`;
+
 export const Input = styled.input<DarkThemeProps>`
+  flex: 1;
   font-family: ${theme.fonts.primary};
   font-size: ${theme.fontSizes.base};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
   background-color: transparent;
   border: none;
-  outline: 1px solid ${theme.colors.neuRed};
-  border-radius: 10px;
-  width: 100%;
-  height: 44px;
-  padding: 6px;
-  transition: all 0.2s ease-in-out;
+  outline: none;
+  height: 36px;
   box-sizing: border-box;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0, 0, 0, 0.07) inset;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+`;
 
-  &:focus {
-    outline: 2px solid ${theme.colors.neuBrightRed};
-  }
+export const InformativeBox = styled.div<DarkThemeProps>`
+  flex: 0 0 32px;
+  font-family: ${theme.fonts.primary};
+  font-size: ${theme.fontSizes.sm};
+  color: ${theme.colors.neuRed};
+  background-color: transparent;
+  width: 36px;
+  height: 36px;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  text-align: center;
 `;
 
 export const ForgotPasswordButton = styled.button<DarkThemeProps>`
@@ -168,6 +202,10 @@ export const MainButton = styled(LoginButton)`
   margin-top: 20px;
 `;
 
+export const VerificationButton = styled(LoginButton)`
+  margin-top: 10px;
+`;
+
 export const SignupText = styled.p<DarkThemeProps>`
   font-family: ${theme.fonts.primary};
   font-size: ${theme.fontSizes.sm};
@@ -200,6 +238,6 @@ export const SubTextLabel = styled.p<DarkThemeProps>`
   font-size: ${theme.fontSizes.sm};
   color: ${props => (props.darkMode ? theme.colors.neuWhite : theme.colors.neuBlack)};
   font-size: 0.8em;
-  margin-top: ${theme.spacing.sm};
+  margin-top: ${theme.spacing.xs};
   margin-bottom: ${theme.spacing.none};
 `;
