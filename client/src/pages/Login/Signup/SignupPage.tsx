@@ -13,7 +13,7 @@ import {
   SubTextLabel,
 } from '../../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from './DarkThemeContex';
+import { useTheme } from '../DarkThemeContex';
 
 export default function SignupPage() {
   const { darkMode } = useTheme();
