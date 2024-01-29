@@ -19,7 +19,7 @@ import {
 import styled from 'styled-components';
 import theme from '../../styles/themes';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from './DarkThemeContex';
+import { useTheme } from '../../props/DarkThemeContex';
 
 export default function LoginPage() {
   const { darkMode, toggleDarkMode } = useTheme();

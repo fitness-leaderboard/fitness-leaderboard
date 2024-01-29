@@ -12,7 +12,7 @@ import {
   MainButton,
 } from '../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../login/DarkThemeContex';
+import { useTheme } from '../../props/DarkThemeContex';
 import { useLocation } from 'react-router-dom';
 
 export default function VerificationPage() {
