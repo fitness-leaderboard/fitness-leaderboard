@@ -11,9 +11,9 @@ import {
   SignupButton,
   SignupText,
   SubTextLabel,
-} from '../../../styles/LoginPageStyles';
+} from '../../styles/LoginPageStyles';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../DarkThemeContex';
+import { useTheme } from '../login/DarkThemeContex';
 
 export default function SignupPage() {
   const { darkMode } = useTheme();

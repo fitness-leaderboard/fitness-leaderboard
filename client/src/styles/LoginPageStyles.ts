@@ -6,8 +6,7 @@ export const Container = styled.div<DarkThemeProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
-  max-width: 100%;
+  min-width: 100%;
   margin: 0 auto; /* Center the content */
   background-color: ${props => (props.darkMode ? theme.colors.neuDarkGray : theme.colors.neuWhite)};
 `;
