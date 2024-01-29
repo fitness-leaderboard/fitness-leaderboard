@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "start": "ts-node --transpile-only server.ts",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "dev": "nodemon --exec ts-node --transpile-only server.ts"
   },
   "keywords": [
     "heroku"
@@ -46,7 +47,7 @@
     "prettier": "^2.7.1",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.5.1",
-    "ts-node": "^10.8.2",
+    "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   }
 }
