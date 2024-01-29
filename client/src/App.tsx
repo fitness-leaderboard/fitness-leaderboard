@@ -4,7 +4,7 @@ import SignupPage from './pages/signup';
 import VerificationPage from './pages/verification';
 import NoPage from './pages/nopage/NoPage';
 import HomePage from './pages/home/HomePage';
-import LoginPage from './pages/login-page';
+import LoginPage from './pages/login';
 // import LoginPage from './pages/LoginPage';
 
 function App() {
