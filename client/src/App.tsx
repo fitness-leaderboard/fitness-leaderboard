@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<EmailSignupPage />} />
+        <Route path='/' element={<WelcomePage />} />
         <Route path='emailsignup'>
           <Route index element={<EmailSignupPage />} />
           <Route path='newsignup' element={<NewSignupPage />} />
