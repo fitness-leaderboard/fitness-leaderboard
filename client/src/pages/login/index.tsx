@@ -15,12 +15,15 @@ import {
   InputContainer,
   InputWrapper,
   InputLabel,
-} from '../../../styles/LoginPageStyles';
+  Form,
+} from '../../styles/LoginPageStyles';
 import styled from 'styled-components';
-import theme from '../../../styles/themes';
+import theme from '../../styles/themes';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from './DarkThemeContex';
-export default function WelcomePage() {
+import { useTheme } from '../../props/DarkThemeContex';
+import LoginForm from './LoginForm';
+
+export default function LoginPage() {
   const { darkMode, toggleDarkMode } = useTheme();
   const ToggleButton = styled.button`
     width: 200px;
@@ -35,7 +38,7 @@ export default function WelcomePage() {
   const navigate = useNavigate();
 
   const handleSignupClick = () => {
-    navigate('/emailsignup');
+    navigate('/signup');
   };
   return (
     <Container>
@@ -44,28 +47,16 @@ export default function WelcomePage() {
           Toggle to {darkMode ? 'light' : 'dark'} mode
         </ToggleButton>
         <LogoContainer>
-          <LogoImage src='/neulogo.png' width={250} alt='Leaderboards Logo' />
+          <LogoImage src='/buff-husky.png' width={250} alt='Leaderboards Logo' />
         </LogoContainer>
       </LeftColumn>
       <RightColumn darkMode={darkMode}>
         <MainWrapper darkMode={darkMode}>
           <MainHeader darkMode={darkMode}>Welcome To Leaderboards!</MainHeader>
-          <InputContainer>
-            <InputWrapper>
-              <InputLabel darkMode={darkMode}>Email</InputLabel>
-              <Input type='text' placeholder='doe.j@northeastern.edu' darkMode={darkMode}></Input>
-            </InputWrapper>
-            <InputWrapper>
-              <InputLabel darkMode={darkMode}>Password</InputLabel>
-              <Input type='password' placeholder='abc123' darkMode={darkMode}></Input>
-            </InputWrapper>
-            <ForgotPasswordButton darkMode={darkMode}>Forgot Password?</ForgotPasswordButton>
-            <LoginButton>Login</LoginButton>
-            <SignupText darkMode={darkMode}>
-              Don't have an account?{' '}
-              <SignupButton onClick={handleSignupClick}>Sign up</SignupButton>
-            </SignupText>
-          </InputContainer>
+          <LoginForm />
+          <SignupText darkMode={darkMode}>
+            Don't have an account? <SignupButton onClick={handleSignupClick}>Sign up</SignupButton>
+          </SignupText>
         </MainWrapper>
       </RightColumn>
     </Container>
