@@ -127,6 +127,7 @@ export const Input = styled.input<DarkThemeProps>`
   padding: 6px;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0, 0, 0, 0.07) inset;
 
   &:focus {
     outline: 2px solid ${theme.colors.neuBrightRed};
