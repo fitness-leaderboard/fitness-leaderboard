@@ -25,7 +25,7 @@ export default function VerificationPage() {
 
   const handleConfirmClick = () => {
     if (isValidCode(verificationCode)) {
-      navigate('/homepage');
+      navigate('/');
     } else {
       console.error('Invalid email address');
     }
