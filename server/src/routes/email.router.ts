@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router } from 'express';
 
 /*
  * This file defines the routes for the email-related endpoints of the application.
@@ -8,17 +8,19 @@ import { Router } from 'express'
  * GET /validEmailFormat
  * GET /sendVerificationEmail
  * GET /sendForgotPasswordEmail
-*/
+ */
 import {
   validEmailFormat,
   sendVerificationEmail,
-  sendForgotPasswordEmail
-} from '../api/email.api'
+  sendForgotPasswordEmail,
+  postUser,
+} from '../api/email.api';
 
-const router = Router()
+const router = Router();
 
-router.get('/validEmailFormat', validEmailFormat)
-router.get('/sendVerificationEmail', sendVerificationEmail)
-router.get('/sendForgotPasswordEmail', sendForgotPasswordEmail)
+router.get('/validEmailFormat', validEmailFormat);
+router.get('/sendVerificationEmail', sendVerificationEmail);
+router.get('/sendForgotPasswordEmail', sendForgotPasswordEmail);
+router.post('/postUser', postUser);
 
-export default router
+export default router;
