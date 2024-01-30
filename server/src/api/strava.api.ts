@@ -1,89 +1,124 @@
 import { Request, Response } from 'express';
+import querystring from 'querystring';
+import dotenv from 'dotenv';
+import request from 'request';
 
-const CLIENT_ID = process.env.STRAVA_CLIENT_ID;
-const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET;
+dotenv.config();
+
+const client_id = process.env.STRAVA_CLIENT_ID;
+const client_secret = process.env.STRAVA_CLIENT_SECRET;
 // const STRAVA_API_URL = 'https://www.strava.com/api/v3';
+const auth_link = 'https://www.strava.com/oauth/token';
 
-const auth_link = "https://www.strava.com/oauth/token"
-
-export const authenticateStrava = async (
-    req: Request,
-    res: Response
-  ) => {
-    const code = req.query.code;
-    const client_id = CLIENT_ID;
-    const client_secret = CLIENT_SECRET;
-    const grant_type = 'authorization_code';
-    
-    try {
-      const response = await fetch(auth_link, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          client_id,
-          client_secret,
-          code,
-          grant_type,
-        }),
-      });
-  
-      const data = await response.json();
-      
-      // Log the data
-      console.log('OAuth Response:', data);
-      
-      // Send the response to the client
-      res.status(200).json(data);
-    } catch (error) {
-      console.error('Error during OAuth:', error);
-      res.status(500).json({ error: 'Failed to authenticate with Strava' });
-    }
-  };
-
-export const rootHandler = (req: Request, res: Response) => {
-    res.status(200).send('Welcome to the Strava authentication server!');
-};
-    
 // New route to initiate the OAuth flow
 export const initiateOAuth = (req: Request, res: Response) => {
-    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=http://localhost:3000/strava/authenticateStrava&response_type=code&scope=read_all`;
-    res.redirect(stravaAuthUrl);
-  };
+  res.redirect(
+    'https://www.strava.com/oauth/authorize?' +
+      querystring.stringify({
+        client_id: client_id,
+        redirect_uri: 'http://localhost:8080/callback',
+        response_type: 'code',
+        approval_prompt: 'auto',
+        scope: 'activity:read_all',
+      }),
+  );
+};
+
+export const callback = async (req: Request, res: Response) => {
+  const code = req.query.code;
+  const grant_type = 'authorization_code';
+
+  try {
+    const authOptions = {
+      url: auth_link,
+      body: JSON.stringify({
+        client_id,
+        client_secret,
+        code,
+        grant_type,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64'),
+      },
+    };
+
+    request.post(authOptions, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        console.log('Body:', body.type);
+        const responseBody = JSON.parse(body);
+        const access_token = responseBody.access_token;
+        const refresh_token = responseBody.refresh_token;
+        const expires_at = responseBody.expires_at;
+        const epxires_in = responseBody.expires_in;
+        const scope = responseBody.scope;
+
+        console.log(refresh_token);
+        console.log(access_token);
+
+        // we can also pass the token to the browser to make requests from there
+        res.redirect(
+          'http://localhost:3000/home/' +
+            querystring.stringify({
+              access_token: access_token,
+              refresh_token: refresh_token,
+              expires_at: expires_at,
+              expires_in: epxires_in,
+              scope: scope,
+            }),
+        );
+      } else {
+        res.redirect(
+          'http://localhost:3000/' +
+            querystring.stringify({
+              error: 'invalid_token',
+            }),
+        );
+      }
+    });
+  } catch (error) {
+    console.error('Error during OAuth:', error);
+    res.status(500).json({ error: 'Failed to authenticate with Strava' });
+  }
+};
+
+export const rootHandler = (req: Request, res: Response) => {
+  res.status(200).send('Welcome to the Strava authentication server!');
+};
 
 // get activities
 export const getActivities = async (req: Request, res: Response) => {
-    // const accessToken = req.access_token;
-    const activities_link = `https://www.strava.com/api/v3/athlete/activities?access_token=07c047cafbaac3db45cdaf1895b41dec694c778c`;
-  
-    try {
-      const response = await fetch(activities_link, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (!response.ok) {
-        // Handle non-200 status codes
-        console.error('Error fetching Strava activities:', response.statusText);
-        res.status(response.status).json({ error: `Failed to fetch Strava activities: ${response.statusText}` });
-        return;
-      }
-  
-      const data = await response.json();
-      console.log('Activities:', data);
-      res.status(200).json(data);
-    } catch (error) {
-      console.error('Error fetching Strava activities:', error);
-      res.status(500).json({ error: 'Failed to fetch Strava activities' });
+  // const accessToken = req.access_token;
+  const activities_link = `https://www.strava.com/api/v3/athlete/activities?access_token=07c047cafbaac3db45cdaf1895b41dec694c778c`;
+
+  try {
+    const response = await fetch(activities_link, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      // Handle non-200 status codes
+      console.error('Error fetching Strava activities:', response.statusText);
+      res
+        .status(response.status)
+        .json({ error: `Failed to fetch Strava activities: ${response.statusText}` });
+      return;
     }
-  };
-  
+
+    const data = await response.json();
+    console.log('Activities:', data);
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error fetching Strava activities:', error);
+    res.status(500).json({ error: 'Failed to fetch Strava activities' });
+  }
+};
 
 // get athlete
-// export const getAthlete = async (req: Request, res: Response) => {  
+// export const getAthlete = async (req: Request, res: Response) => {
 //     const athlete_link = `https://www.strava.com/api/v3/athlete?access_token=${res.access_token}`
 //     try {
 //       const response = await fetch(athlete_link, {
@@ -112,7 +147,7 @@ export const getActivities = async (req: Request, res: Response) => {
 
 //     const api = new StravaApiV3.ActivitiesApi()
 
-//     const opts = { 
+//     const opts = {
 //     'before': 56, // {Integer} An epoch timestamp to use for filtering activities that have taken place before a certain time.
 //     'after': 56, // {Integer} An epoch timestamp to use for filtering activities that have taken place after a certain time.
 //     'page': 56, // {Integer} Page number. Defaults to 1.
