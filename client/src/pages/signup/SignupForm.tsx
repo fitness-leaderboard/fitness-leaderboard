@@ -12,6 +12,7 @@ import { useTheme } from '../../props/DarkThemeContex';
 import { useNavigate } from 'react-router-dom';
 import CheckIcon from '../../icons/CheckIcon';
 import XIcon from '../../icons/XIcon';
+import { sendVerificationEmail, validateEmailFormat } from '../../api/email.api'
 
 function SignupForm() {
   const { darkMode } = useTheme();
@@ -26,10 +27,10 @@ function SignupForm() {
     return password === confirmPassword;
   };
 
-  const isValidPassword = (password: string) => {
-    /* Exhaust password validation rules and show what users need for a good password
-    Also try to allow google to make password?*/
-    return password.length >= 8 && password.length <= 20;
+  const isValidPassword = (password: string) : Boolean => {
+    // Must be at least 8-20 characters containing lowercase, uppercase, number, and symbol
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
+    return passwordRegex.test(password)
   };
 
   const handlePasswordChange = (event: { target: { value: React.SetStateAction<string> } }) => {
@@ -42,19 +43,23 @@ function SignupForm() {
 
   const handleSubmitSignUp = async (event: any) => {
     event.preventDefault();
-    await fetch(`http://localhost:8080/validEmailFormat?email=${email}`)
-      .then(response => {
-        if (response.status === 200) {
-          if (passwordsMatch(password, confirmPassword) && isValidPassword(password)) {
-            navigate('/signup/verification', { state: { email: email } });
-          }
-        } else if (response.status === 400) {
-          setError('Invalid email format');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    try {
+      if(!isValidPassword(password)) {
+        setError('Password must be at least 8-20 characters containing lowercase, uppercase, number, and symbol');
+        return
+      }
+      if(!passwordsMatch(password, confirmPassword)) {
+        setError('Passwords do not match');
+        return;
+      }
+      const response = await validateEmailFormat(email);
+      if(response.ok) {
+        await sendVerificationEmail(email);
+      }
+      navigate('/signup/verification', { state: { email: email } });
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string> } }) => {
@@ -98,6 +103,9 @@ function SignupForm() {
             <CheckIcon width={36} height={36} />
           </InformativeBox>
         </InputWrapper>
+        <SubTextLabel darkMode={darkMode}>
+          <p>{error}</p>
+        </SubTextLabel>
         <MainButton type='submit'>Next</MainButton>
       </InputContainer>
     </Form>

@@ -12,7 +12,8 @@ import { Router } from 'express'
 import {
   validateEmailFormat,
   sendVerificationEmail,
-  sendForgotPasswordEmail
+  sendForgotPasswordEmail,
+  verifyToken
 } from '../api/email.api'
 
 const router = Router()
@@ -20,5 +21,6 @@ const router = Router()
 router.get('/email/validateFormat', validateEmailFormat)
 router.post('/email/verifyEmail', sendVerificationEmail)
 router.post('/email/forgotPassword', sendForgotPasswordEmail)
+router.get('/email/verifyToken', verifyToken)
 
 export default router

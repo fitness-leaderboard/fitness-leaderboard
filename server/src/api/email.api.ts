@@ -8,7 +8,7 @@ import fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
 import { Email } from '../libraries/model/Email'
-
+import { TokenType } from '../libraries/model/Types'
 dotenv.config()
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -30,7 +30,6 @@ export const validateEmailFormat = async (
   //next: NextFunction
 ) => {
   const email = req.query.email as string
-
   try { 
     !Email.create(email) 
   } catch (error) {
@@ -139,4 +138,40 @@ export const sendForgotPasswordEmail = async (
   }
 
   res.status(200).json({ message: `Forgot email sent to ${receipientEmail}!` })
+}
+
+export const verifyToken = async (
+  req : Request,
+  res : Response,
+  //next: NextFunction
+) => {
+  const receipientEmail = req.body.email as string
+  const token = req.body.token as string
+  const tokenType = req.body.tokenType as TokenType
+
+  try {
+    // Check if email exist in database and create a token and store in database
+    if (!receipientEmail) {
+      return res.status(400).json({ error: 'No receipient email provided' })
+    }
+
+    if (!Email.create(receipientEmail)) {
+      return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
+    }
+
+    if (!token) {
+      return res.status(400).json({ error: 'No token provided' })
+    }
+
+    if (!tokenType) {
+      return res.status(400).json({ error: 'No token type provided' })
+    }
+
+    // db get
+  }
+  catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+
+  res.status(200).json({ message: `Successfully verified token` })
 }
