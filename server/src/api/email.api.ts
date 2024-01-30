@@ -17,14 +17,14 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 /**
  * validEmailFormat
  * 
- * This is an asynchronous function that handles the '/validEmailFormat' route.
+ * This is an asynchronous function that handles the '/email/verifyEmail' route.
  *
  * It validates the email address provided in the query parameters.
  * 
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
- * Sample Request: http://localhost:8080/validEmailFormat?email=lin.kenn@northeastern.edu
+ * Sample Request: http://localhost:8080/email/validateFormat?email=lin.kenn@northeastern.edu
  */
-export const validEmailFormat = async (
+export const validateEmailFormat = async (
   req: Request, 
   res: Response,
   //next: NextFunction
@@ -44,41 +44,44 @@ export const validEmailFormat = async (
 /**
  * sendVerificationEmail
  *
- * This is an asynchronous function that handles the '/sendVerificationEmail' route.
+ * This is an asynchronous function that handles the '/email/verifyEmail' route.
  *
  * It sends a verification email to the email address provided in the query parameters.
  * It first validates the email address, and if it's valid, it sends the email using the 'resend.emails.send' method.
  *
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
- * Sample Request: http://localhost:8080/sendVerificationEmail?email=lin.kenn@northeastern.edu&token=NU2024
+ * Sample Request: http://localhost:8080/email/verifyEmail?email=lin.kenn@northeastern.edu
  */
 export const sendVerificationEmail = async (
   req: Request, 
   res: Response,
   //next: NextFunction
 ) => {
-  const receipientEmail = req.query.email as string
-  const Token = req.query.token as string
+  const receipientEmail = req.body.email as string
   const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
 
   try {
+      // Check if email exist in database and create a token and store in database
     if (!receipientEmail) {
       return res.status(400).json({ error: 'No receipient email provided' })
-    }
-
-    if (!Token) {
-      return res.status(400).json({ error: 'No token provided' })
     }
     
     if (!Email.create(receipientEmail)) {
       return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
     }
+    
+    const token = () => {
+      const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let result = "";
 
-    if (Token.length !== 6 || !Token.match(/^[0-9A-Z]+$/)) {
-      return res.status(400).json({ error: 'Invalid token provided. Must be six characters and contain only 0-9A-Z' })
+      for (let i = 0; i < 6; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+      }
+      return result;
     }
 
-    const verifyEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/verifyEmail.html'), 'utf8').replace('verifyTokenPlaceholder', Token)
+    const verifyEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/verifyEmail.html'), 'utf8').replace('verifyTokenPlaceholder', token);
 
     await resend.emails.send({
       from: fromEmail,
@@ -91,35 +94,35 @@ export const sendVerificationEmail = async (
     return res.status(400).json({ message : error.message })
   } 
 
-  return res.status(200).json({message: `Email sent to ${receipientEmail} with token ${Token}!` })
+  return res.status(200).json({message: `Email sent to ${receipientEmail} with token!` })
 }
 
 /**
  * sendForgotPasswordEmail
  *
- * This is an asynchronous function that handles the '/sendForgotPasswordEmail' route.
+ * This is an asynchronous function that handles the '/email/forgotPassword' route.
  *
  * It sends a password reset email to the email address provided in the query parameters.
  * It first validates the email address, and if it's valid, it sends the email using the 'resend.emails.send' method.
  * The HTML content of the email is set to the 'sendForgotPasswordEmailHtml' constant.
  *
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
- * Sample Request: http://localhost:8080/sendForgotPasswordEmail?email=lin.kenn@northeastern.edu
+ * Sample Request: http://localhost:8080/email/forgotPassword?email=lin.kenn@northeastern.edu
  */
 export const sendForgotPasswordEmail = async (
   req: Request,
   res: Response,
   //next: NextFunction
 ) => {
-  const receipientEmail = req.query.email as string
-
-  if (!receipientEmail) {
-    return res.status(400).json({ error: 'No receipient email provided' })
-  }
-
+  const receipientEmail = req.body.email as string
   const forgotPasswordEmailHtml = fs.readFileSync(path.join(__dirname, '../../public/forgotPassword.html'), 'utf8')
 
   try {
+    // Check if email exist in database and create a token and store in database
+    if (!receipientEmail) {
+      return res.status(400).json({ error: 'No receipient email provided' })
+    }
+
     if (!Email.create(receipientEmail)) {
       return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
     }

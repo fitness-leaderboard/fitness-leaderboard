@@ -10,15 +10,15 @@ import { Router } from 'express'
  * GET /sendForgotPasswordEmail
 */
 import {
-  validEmailFormat,
+  validateEmailFormat,
   sendVerificationEmail,
   sendForgotPasswordEmail
 } from '../api/email.api'
 
 const router = Router()
 
-router.get('/validEmailFormat', validEmailFormat)
-router.get('/sendVerificationEmail', sendVerificationEmail)
-router.get('/sendForgotPasswordEmail', sendForgotPasswordEmail)
+router.get('/email/validateFormat', validateEmailFormat)
+router.post('/email/verifyEmail', sendVerificationEmail)
+router.post('/email/forgotPassword', sendForgotPasswordEmail)
 
 export default router
