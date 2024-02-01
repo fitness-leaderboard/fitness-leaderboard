@@ -18,12 +18,14 @@ export const registrationValidator = (email: string, password: string) => {
     errors.email = 'Invalid email format';
   }
 
-  // Extract domain from the email
-  const [, domain] = email.split('@');
+  if (email.includes('@')) {
+    // Extract domain from the email
+    const [, domain] = email.split('@');
 
-  // Check if the domain is 'northeastern.edu'
-  if (domain.toLowerCase() !== 'northeastern.edu') {
-    errors.email = 'Please use your @northeastern.edu email address';
+    // Check if the domain is 'northeastern.edu'
+    if (domain.toLowerCase() !== 'northeastern.edu') {
+      errors.email = 'Please use your @northeastern.edu email address';
+    }
   }
 
   if (!password || password.trim() === '' || password.length < 6) {
