@@ -1,6 +1,6 @@
-import { 
-  type Response, 
-  type Request, 
+import {
+  type Response,
+  type Request,
   //type NextFunction 
 } from 'express'
 import { Resend } from 'resend'
@@ -33,7 +33,7 @@ export const validateEmailFormat = async (
   try { 
     !Email.create(email) 
   } catch (error) {
-    return res.status(400).json({ message: error.message})
+    return res.status(400).json({ message: error.message })
   }
 
   return res.status(200).json({ message: 'Valid email format' })
@@ -52,7 +52,7 @@ export const validateEmailFormat = async (
  * Sample Request: http://localhost:8080/email/verifyEmail?email=lin.kenn@northeastern.edu
  */
 export const sendVerificationEmail = async (
-  req: Request, 
+  req: Request,
   res: Response,
   //next: NextFunction
 ) => {
@@ -90,8 +90,8 @@ export const sendVerificationEmail = async (
     })
   }
   catch (error) {
-    return res.status(400).json({ message : error.message })
-  } 
+    return res.status(400).json({ message: error.message })
+  }
 
   return res.status(200).json({message: `Email sent to ${receipientEmail} with token!` })
 }
@@ -127,10 +127,10 @@ export const sendForgotPasswordEmail = async (
     }
 
     await resend.emails.send({
-    from: `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`,
-    to: receipientEmail,
-    subject: 'Join the Pack',
-    html: forgotPasswordEmailHtml
+      from: `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`,
+      to: receipientEmail,
+      subject: 'Join the Pack',
+      html: forgotPasswordEmailHtml
     })
   }
   catch (error) {
