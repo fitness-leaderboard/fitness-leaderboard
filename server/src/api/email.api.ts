@@ -1,6 +1,6 @@
-import { 
-  type Response, 
-  type Request, 
+import {
+  type Response,
+  type Request,
   //type NextFunction 
 } from 'express'
 import { Resend } from 'resend'
@@ -25,16 +25,16 @@ const resend = new Resend(process.env.RESEND_API_KEY)
  * Sample Request: http://localhost:8080/validEmailFormat?email=lin.kenn@northeastern.edu
  */
 export const validEmailFormat = async (
-  req: Request, 
+  req: Request,
   res: Response,
   //next: NextFunction
 ) => {
   const email = req.query.email as string
 
-  try { 
-    !Email.create(email) 
+  try {
+    !Email.create(email)
   } catch (error) {
-    return res.status(400).json({ message: error.message})
+    return res.status(400).json({ message: error.message })
   }
 
   return res.status(200).json({ message: 'Valid email format' })
@@ -53,7 +53,7 @@ export const validEmailFormat = async (
  * Sample Request: http://localhost:8080/sendVerificationEmail?email=lin.kenn@northeastern.edu&token=NU2024
  */
 export const sendVerificationEmail = async (
-  req: Request, 
+  req: Request,
   res: Response,
   //next: NextFunction
 ) => {
@@ -69,7 +69,7 @@ export const sendVerificationEmail = async (
     if (!Token) {
       return res.status(400).json({ error: 'No token provided' })
     }
-    
+
     if (!Email.create(receipientEmail)) {
       return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
     }
@@ -88,10 +88,10 @@ export const sendVerificationEmail = async (
     })
   }
   catch (error) {
-    return res.status(400).json({ message : error.message })
-  } 
+    return res.status(400).json({ message: error.message })
+  }
 
-  return res.status(200).json({message: `Email sent to ${receipientEmail} with token ${Token}!` })
+  return res.status(200).json({ message: `Email sent to ${receipientEmail} with token ${Token}!` })
 }
 
 /**
@@ -125,10 +125,10 @@ export const sendForgotPasswordEmail = async (
     }
 
     await resend.emails.send({
-    from: `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`,
-    to: receipientEmail,
-    subject: 'Join the Pack',
-    html: forgotPasswordEmailHtml
+      from: `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`,
+      to: receipientEmail,
+      subject: 'Join the Pack',
+      html: forgotPasswordEmailHtml
     })
   }
   catch (error) {
