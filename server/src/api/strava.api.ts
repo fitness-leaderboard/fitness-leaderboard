@@ -12,19 +12,24 @@ const auth_link = 'https://www.strava.com/oauth/token';
 
 // New route to initiate the OAuth flow
 export const initiateOAuth = (req: Request, res: Response) => {
+  const { token } = req.body.id
   res.redirect(
     'https://www.strava.com/oauth/authorize?' +
-      querystring.stringify({
-        client_id: client_id,
-        redirect_uri: 'http://localhost:8080/callback',
-        response_type: 'code',
-        approval_prompt: 'auto',
-        scope: 'activity:read_all',
-      }),
+    querystring.stringify({
+      client_id: client_id,
+      redirect_uri: `http://localhost:8080/callback/${token}`,
+      response_type: 'code',
+      approval_prompt: 'auto',
+      scope: 'activity:read_all',
+    }),
   );
 };
 
 export const callback = async (req: Request, res: Response) => {
+
+  const { token } = req.body.token
+
+  const { id } = turnTokenIntoId(token)
   const code = req.query.code;
   const grant_type = 'authorization_code';
 
@@ -59,20 +64,20 @@ export const callback = async (req: Request, res: Response) => {
         // we can also pass the token to the browser to make requests from there
         res.redirect(
           'http://localhost:3000/home/' +
-            querystring.stringify({
-              access_token: access_token,
-              refresh_token: refresh_token,
-              expires_at: expires_at,
-              expires_in: epxires_in,
-              scope: scope,
-            }),
+          querystring.stringify({
+            access_token: access_token,
+            refresh_token: refresh_token,
+            expires_at: expires_at,
+            expires_in: epxires_in,
+            scope: scope,
+          }),
         );
       } else {
         res.redirect(
           'http://localhost:3000/' +
-            querystring.stringify({
-              error: 'invalid_token',
-            }),
+          querystring.stringify({
+            error: 'invalid_token',
+          }),
         );
       }
     });
