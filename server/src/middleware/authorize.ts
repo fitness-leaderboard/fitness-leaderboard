@@ -1,10 +1,6 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import { JWT_SECRET } from '../utils/config';
 import { Request, Response, NextFunction } from 'express';
-
-dotenv.config();
-
-const jwt_secret = process.env.JWT_SECRET as string;
 
 interface TokenInterface {
   id: string;
@@ -22,7 +18,7 @@ export default function authorize(req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    const decodedToken = jwt.verify(token, jwt_secret) as TokenInterface;
+    const decodedToken = jwt.verify(token, JWT_SECRET) as TokenInterface;
 
     if (!decodedToken.id) {
       return res.status(401).send({ message: 'Token verification failed. Authorization denied.' });

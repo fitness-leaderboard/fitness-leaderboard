@@ -1,12 +1,8 @@
 import { Request, Response } from 'express';
 import querystring from 'querystring';
-import dotenv from 'dotenv';
 import request from 'request';
+import { STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET } from '../utils/config';
 
-dotenv.config();
-
-const client_id = process.env.STRAVA_CLIENT_ID;
-const client_secret = process.env.STRAVA_CLIENT_SECRET;
 // const STRAVA_API_URL = 'https://www.strava.com/api/v3';
 const auth_link = 'https://www.strava.com/oauth/token';
 
@@ -16,7 +12,7 @@ export const initiateOAuth = (req: Request, res: Response) => {
   res.redirect(
     'https://www.strava.com/oauth/authorize?' +
       querystring.stringify({
-        client_id: client_id,
+        client_id: STRAVA_CLIENT_ID,
         redirect_uri: `http://localhost:8080/callback/${token}`,
         response_type: 'code',
         approval_prompt: 'auto',
@@ -26,9 +22,9 @@ export const initiateOAuth = (req: Request, res: Response) => {
 };
 
 export const callback = async (req: Request, res: Response) => {
-  const token = req.body.token;
+  // const token = req.body.token;
 
-  const id = turnTokenIntoId(token);
+  // const id = turnTokenIntoId(token);
   const code = req.query.code;
   const grant_type = 'authorization_code';
 
@@ -36,14 +32,15 @@ export const callback = async (req: Request, res: Response) => {
     const authOptions = {
       url: auth_link,
       body: JSON.stringify({
-        client_id,
-        client_secret,
+        STRAVA_CLIENT_ID,
+        STRAVA_CLIENT_SECRET,
         code,
         grant_type,
       }),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64'),
+        'Authorization':
+          'Basic ' + Buffer.from(STRAVA_CLIENT_ID + ':' + STRAVA_CLIENT_SECRET).toString('base64'),
       },
     };
 

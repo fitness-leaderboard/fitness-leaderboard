@@ -1,9 +1,5 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const jwt_secret = process.env.JWT_SECRET as string;
+import { JWT_SECRET } from './config';
 
 interface User {
   id: number;
@@ -17,5 +13,5 @@ export default function jwtGenerator(user: User) {
     email: user.email,
   };
 
-  return jwt.sign(payload, jwt_secret);
+  return jwt.sign(payload, JWT_SECRET);
 }
