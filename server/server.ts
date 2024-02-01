@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use(emailRoutes);
-app.use(stravaRoutes);
+app.use('/email', emailRoutes);
+app.use('/strava', stravaRoutes);
 app.use('/', authRoutes);
 
 app.listen(PORT, () => {
