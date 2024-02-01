@@ -1,19 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
-import Base from './Base';
-import Home from './Home';
+import SignupPage from './pages/signup';
+import VerificationPage from './pages/verification';
+import NoPage from './pages/nopage/NoPage';
+import HomePage from './pages/home/HomePage';
+import LoginPage from './pages/login';
+// import LoginPage from './pages/LoginPage';
 
 function App() {
-  const handleLogin = async () => {
-    window.location.href = 'http://localhost:8080/initiateOAuth';
-  };
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Base />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='signup'>
+          <Route index element={<SignupPage />} />
+          <Route path='verification' element={<VerificationPage />} />
+        </Route>
+        <Route path='*' element={<NoPage />} />{' '}
       </Routes>
     </BrowserRouter>
   );
