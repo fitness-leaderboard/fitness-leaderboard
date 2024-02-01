@@ -10,28 +10,116 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User Tables and Profile Tables
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
-  name      String?
   password  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  Profile   Profile[]
+  Profile   Profile?
   APIToken  APIToken[]
 }
 
 model Profile {
+  id                 Int                  @id @default(autoincrement())
+  user               User                 @relation(fields: [userId], references: [id])
+  userId             Int                  @unique
+  name               String
+  birthday           DateTime
+  ranks              Rank[]
+  ProfileBadge       ProfileBadge[]
+  Activity           Activity[]
+  ProfileLeaderboard ProfileLeaderboard[]
+}
+
+// Badge Tables
+model Badge {
   id           Int            @id @default(autoincrement())
-  user         User           @relation(fields: [userId], references: [id])
-  userId       Int
-  ranks        Rank[]
-  RunningStat  RunningStat[]
-  BikingStat   BikingStat[]
-  SwimmingStat SwimmingStat[]
-  WalkingStat  WalkingStat[]
-  HikingStat   HikingStat[]
-  RowingStat   RowingStat[]
+  name         String
+  description  String
+  iconPath     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ProfileBadge ProfileBadge[]
+}
+
+// Many to Many Table to store badges of a user
+model ProfileBadge {
+  id        Int      @id @default(autoincrement())
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  profileId Int
+  badge     Badge    @relation(fields: [badgeId], references: [id])
+  badgeId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Leaderboard Tables
+model Leaderboard {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  createdAt          DateTime             @default(now())
+  startDate          DateTime             @default(now())
+  endDate            DateTime             @default(now())
+  ranks              Rank[]
+  Activity           Activity[]
+  ProfileLeaderboard ProfileLeaderboard[]
+}
+
+model ProfileLeaderboard {
+  id            Int         @id @default(autoincrement())
+  profile       Profile     @relation(fields: [profileId], references: [id])
+  profileId     Int
+  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
+  leaderboardId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+// Activity Tables
+model ActivityType {
+  id       Int        @id @default(autoincrement())
+  name     String
+  Activity Activity[]
+}
+
+model Activity {
+  id             Int          @id @default(autoincrement())
+  activity       ActivityType @relation(fields: [activityTypeId], references: [id])
+  activityTypeId Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  distance       Decimal
+  movingTime     Int
+  elapsedTime    Int
+  elevation      Int
+  avgSpeed       Decimal
+  score          Decimal
+  leaderboard    Leaderboard  @relation(fields: [leaderboardId], references: [id])
+  leaderboardId  Int
+  Profile        Profile?     @relation(fields: [profileId], references: [id])
+  profileId      Int?
+}
+
+// Table to store rank of a user in a leaderboard daily
+model Rank {
+  id            Int         @id @default(autoincrement())
+  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
+  leaderboardId Int
+  rank          Int
+  date          DateTime    @default(now())
+  Profile       Profile?    @relation(fields: [profileId], references: [id])
+  profileId     Int?
+}
+
+//API Tables
+model APIType {
+  id        Int        @id @default(autoincrement())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  APIToken  APIToken[]
 }
 
 model APIToken {
@@ -47,148 +135,4 @@ model APIToken {
   userId       Int
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-}
-
-model APIType {
-  id        Int        @id @default(autoincrement())
-  name      String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  APIToken  APIToken[]
-}
-
-model Badge {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  iconPath    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model Leaderboard {
-  id             Int            @id @default(autoincrement())
-  name           String
-  activityType   ActivityType   @relation(fields: [activityTypeId], references: [id])
-  activityTypeId Int
-  createdAt      DateTime       @default(now())
-  startDate      DateTime       @default(now())
-  endDate        DateTime       @default(now())
-  runningStats   RunningStat[]
-  bikingStats    BikingStat[]
-  swimmingStats  SwimmingStat[]
-  walkingStats   WalkingStat[]
-  hikingStats    HikingStat[]
-  rowingStats    RowingStat[]
-  ranks          Rank[]
-}
-
-model ActivityType {
-  id          Int           @id @default(autoincrement())
-  name        String
-  Leaderboard Leaderboard[]
-}
-
-model RunningStat {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  distance      Decimal
-  movingTime    Int
-  elapsedTime   Int
-  elevation     Int
-  avgSpeed      Decimal
-  score         Decimal
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
-}
-
-model BikingStat {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  distance      Decimal
-  movingTime    Int
-  elapsedTime   Int
-  elevation     Int
-  avgSpeed      Decimal
-  score         Decimal
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
-}
-
-model SwimmingStat {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  distance      Decimal
-  movingTime    Int
-  elapsedTime   Int
-  avgSpeed      Decimal
-  score         Decimal
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
-}
-
-model WalkingStat {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  distance      Decimal
-  movingTime    Int
-  elapsedTime   Int
-  elevation     Int
-  avgSpeed      Decimal
-  score         Decimal
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
-}
-
-model HikingStat {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  distance      Decimal
-  movingTime    Int
-  elapsedTime   Int
-  elevation     Int
-  avgSpeed      Decimal
-  score         Decimal
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
-}
-
-model RowingStat {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  distance      Decimal
-  movingTime    Int
-  elapsedTime   Int
-  avgSpeed      Decimal
-  score         Decimal
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
-}
-
-model Rank {
-  id            Int         @id @default(autoincrement())
-  leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
-  leaderboardId Int
-  rank          Int
-  date          DateTime    @default(now())
-  Profile       Profile?    @relation(fields: [profileId], references: [id])
-  profileId     Int?
 }
