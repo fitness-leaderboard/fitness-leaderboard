@@ -12,54 +12,87 @@ import { useTheme } from '../../props/DarkThemeContex';
 import { useNavigate } from 'react-router-dom';
 import CheckIcon from '../../icons/CheckIcon';
 import XIcon from '../../icons/XIcon';
+import axios from 'axios';
 
 function SignupForm() {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
-
-  const [email, setEmail] = React.useState('');
   const [error, setError] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
-  const passwordsMatch = (password: string, confirmPassword: string) => {
-    return password === confirmPassword;
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
-  const isValidPassword = (password: string) => {
-    /* Exhaust password validation rules and show what users need for a good password
-    Also try to allow google to make password?*/
-    return password.length >= 8 && password.length <= 20;
+  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
-  const handlePasswordChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setPassword(event.target.value);
+  const onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
   };
 
-  const handleConfPwChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setConfirmPassword(event.target.value);
-  };
+  // const passwordsMatch = (password: string, confirmPassword: string) => {
+  //   return password === confirmPassword;
+  // };
+
+  // const isValidPassword = (password: string) => {
+  //   /* Exhaust password validation rules and show what users need for a good password
+  //   Also try to allow google to make password?*/
+  //   return password.length >= 8 && password.length <= 20;
+  // };
 
   const handleSubmitSignUp = async (event: any) => {
     event.preventDefault();
-    await fetch(`http://localhost:8080/validEmailFormat?email=${email}`)
-      .then(response => {
-        if (response.status === 200) {
-          if (passwordsMatch(password, confirmPassword) && isValidPassword(password)) {
-            navigate('/signup/verification', { state: { email: email } });
-          }
-        } else if (response.status === 400) {
-          setError('Invalid email format');
+    // await fetch(`http://localhost:8080/validEmailFormat?email=${email}`)
+    //   .then(response => {
+    //     if (response.status === 200) {
+    //       if (passwordsMatch(password, confirmPassword) && isValidPassword(password)) {
+    //         navigate('/signup/verification', { state: { email: email } });
+    //       }
+    //     } else if (response.status === 400) {
+    //       setError('Invalid email format');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    } else {
+      try {
+        const body = { email, password };
+        const response = await fetch('http://localhost:8080/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const status = response.status;
+        const data = await response.json();
+
+        if (status === 401) {
+          setError(data);
+          return;
         }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+
+        console.log('Status:', status);
+        console.log('Data:', data);
+
+        if (data.jwtToken) {
+          localStorage.setItem('token', data.jwtToken);
+        } else {
+          setError(data);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    }
   };
 
-  const handleInputChange = (event: { target: { value: React.SetStateAction<string> } }) => {
-    setEmail(event.target.value);
-  };
   return (
     <Form action='#' method='post' onSubmit={handleSubmitSignUp}>
       <InputContainer>
@@ -69,10 +102,12 @@ function SignupForm() {
             placeholder='Northeastern Email'
             darkMode={darkMode}
             value={email}
-            onChange={handleInputChange}
+            onChange={onEmailChange}
           />
-          <InformativeBox>{error && <XIcon width={36} height={36} />}</InformativeBox>
-          {/* {error && <SubTextLabel darkMode={darkMode}>{error}</SubTextLabel>} */}
+          <InformativeBox>
+            {error && <XIcon width={36} height={36} />}
+            {/* {error && <SubTextLabel darkMode={darkMode}>{error}</SubTextLabel>} */}
+          </InformativeBox>
         </InputWrapper>
         <InputWrapper>
           <Input
@@ -80,7 +115,7 @@ function SignupForm() {
             placeholder='Password'
             darkMode={darkMode}
             value={password}
-            onChange={handlePasswordChange}
+            onChange={onPasswordChange}
           />
           <InformativeBox>
             <XIcon width={36} height={36} />
@@ -92,7 +127,7 @@ function SignupForm() {
             placeholder='Confirm Password'
             darkMode={darkMode}
             value={confirmPassword}
-            onChange={handleConfPwChange}
+            onChange={onConfirmPasswordChange}
           />
           <InformativeBox>
             <CheckIcon width={36} height={36} />
