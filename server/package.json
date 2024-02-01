@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node --transpile-only server.ts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "dev": "nodemon --exec ts-node --transpile-only server.ts"
+    "dev": "nodemon --exec ts-node --transpile-only server.ts",
+    "prisma": "nodemon setup.ts"
   },
   "keywords": [
     "heroku"
