@@ -28,7 +28,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  */
 export const validEmailFormat = async (
   req: Request,
-  req: Request,
   res: Response,
   //next: NextFunction
 ) => {
@@ -72,7 +71,6 @@ export const postUser = async (req: Request, res: Response) => {
  * Sample Request: http://localhost:8080/sendVerificationEmail?email=lin.kenn@northeastern.edu&token=NU2024
  */
 export const sendVerificationEmail = async (
-  req: Request,
   req: Request,
   res: Response,
   //next: NextFunction
