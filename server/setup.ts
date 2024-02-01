@@ -1,19 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-import { hashPassword } from './src/utils/encryption';
 
 async function main() {
-  const password = 'password';
-  const hashedPassword = await hashPassword(password);
-
-  await prisma.user.create({
-    data: {
-      email: 'user1@northeastern.edu',
-      name: 'User 1',
-      password: hashedPassword,
-    },
-  });
-
+  // Use this to make dummy data. didn't make it for activities yet
   const allUsers = await prisma.user.findMany({
     include: {},
   });
