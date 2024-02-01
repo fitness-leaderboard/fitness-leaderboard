@@ -1,5 +1,5 @@
-import { Router } from 'express'
-
+import { Router } from 'express';
+import { validEmailFormat, sendVerificationEmail, sendForgotPasswordEmail } from '../api/email.api';
 /*
  * This file defines the routes for the email-related endpoints of the application.
  * It uses Express Router to create a new router instance and import the necessary
@@ -8,17 +8,12 @@ import { Router } from 'express'
  * GET /validEmailFormat
  * GET /sendVerificationEmail
  * GET /sendForgotPasswordEmail
-*/
-import {
-  validEmailFormat,
-  sendVerificationEmail,
-  sendForgotPasswordEmail
-} from '../api/email.api'
+ */
 
-const router = Router()
+const router = Router();
 
-router.get('/validEmailFormat', validEmailFormat)
-router.get('/sendVerificationEmail', sendVerificationEmail)
-router.get('/sendForgotPasswordEmail', sendForgotPasswordEmail)
+router.get('/validEmailFormat', validEmailFormat);
+router.get('/sendVerificationEmail', sendVerificationEmail);
+router.get('/sendForgotPasswordEmail', sendForgotPasswordEmail);
 
-export default router
+export default router;
