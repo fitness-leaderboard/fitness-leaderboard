@@ -15,8 +15,9 @@ export const register = async (
   //next: NextFunction
 ) => {
   const { email, password } = req.body;
+  // console.log('email', email);
+  // console.log('pw', password);
   const { errors, valid } = registrationValidator(email, password);
-
   if (!valid) {
     return res.status(400).send({ message: Object.values(errors)[0] });
   }
@@ -28,7 +29,7 @@ export const register = async (
   });
 
   if (existingUser) {
-    return res.status(400).json({ message: 'Email already exists' });
+    return res.status(401).json({ message: 'Email already exists' });
   }
 
   const saltRounds = 10;
@@ -45,7 +46,7 @@ export const register = async (
 
   const jwtToken = jwtGenerator(user);
 
-  return res.status(201).json({
+  return res.status(201).send({
     id: user.id,
     username: user.email,
     jwtToken,
