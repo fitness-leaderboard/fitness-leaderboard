@@ -13,24 +13,29 @@ datasource db {
 // User Tables and Profile Tables
 model User {
   id        Int        @id @default(autoincrement())
-  email     String     @unique
+  email     String
   password  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Profile   Profile?
   APIToken  APIToken[]
+
+  @@unique([email])
 }
 
 model Profile {
   id                 Int                  @id @default(autoincrement())
-  user               User                 @relation(fields: [userId], references: [id])
-  userId             Int                  @unique
+  user               User                 @relation(fields: [id], references: [id])
   name               String
   birthday           DateTime
+  bio                String
+  profilePicture     String               @default("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png")
   ranks              Rank[]
   ProfileBadge       ProfileBadge[]
   Activity           Activity[]
   ProfileLeaderboard ProfileLeaderboard[]
+
+  @@unique([id])
 }
 
 // Badge Tables
@@ -46,13 +51,14 @@ model Badge {
 
 // Many to Many Table to store badges of a user
 model ProfileBadge {
-  id        Int      @id @default(autoincrement())
   profile   Profile  @relation(fields: [profileId], references: [id])
   profileId Int
   badge     Badge    @relation(fields: [badgeId], references: [id])
   badgeId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@id([profileId, badgeId])
 }
 
 // Leaderboard Tables
@@ -67,10 +73,11 @@ model Leaderboard {
   ranks              Rank[]
   Activity           Activity[]
   ProfileLeaderboard ProfileLeaderboard[]
+
+  @@unique([activityTypeId, startDate, endDate])
 }
 
 model ProfileLeaderboard {
-  id            Int         @id @default(autoincrement())
   leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
   leaderboardId Int
   profile       Profile     @relation(fields: [profileId], references: [id])
@@ -78,6 +85,8 @@ model ProfileLeaderboard {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@id([leaderboardId, profileId])
 }
 
 // Activity Tables
@@ -98,12 +107,15 @@ model Activity {
   profileId      Int?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  startDate      DateTime
   distance       Decimal
   movingTime     Int
   elapsedTime    Int
   elevation      Int
   avgSpeed       Decimal
   score          Decimal
+
+  @@unique([profileId, leaderboardId, startDate])
 }
 
 // Table to store rank of a user in a leaderboard daily
@@ -115,6 +127,8 @@ model Rank {
   profileId     Int?
   rank          Int
   date          DateTime    @default(now())
+
+  @@unique([profileId, leaderboardId, rank, date])
 }
 
 //API Tables
@@ -124,6 +138,8 @@ model APIType {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   APIToken  APIToken[]
+
+  @@unique([name])
 }
 
 model APIToken {
