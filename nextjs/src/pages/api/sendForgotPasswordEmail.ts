@@ -1,11 +1,7 @@
 import { Email } from 'src/model/Email'
 import { NextApiRequest, NextApiResponse } from "next/types";
-import path from "path";
-import fs from 'fs'
-import dotenv from 'dotenv'
 import { Resend } from 'resend'
-
-dotenv.config()
+import { sendForgotPasswordEmailHtml } from 'src/pages/forgotPassword'
 
 /**
  * sendForgotPasswordEmail
@@ -17,19 +13,16 @@ dotenv.config()
  * The HTML content of the email is set to the 'sendForgotPasswordEmailHtml' constant.
  *
  * This function is exported for use in the 'email.router' module, where it is attached to its respective route.
+ * Sample Request: http://localhost:8080/sendForgotPasswordEmail?email=lin.kenn@northeastern.edu
  */
-export const sendForgotPasswordEmail = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  const receipientEmail = req.query.email as string
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const receipientEmail = req.body
+  const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
   const resend = new Resend(process.env.RESEND_API_KEY)
 
   if (!receipientEmail) {
     return res.status(400).json({ error: 'No receipient email provided' })
   }
-
-  const forgotPasswordEmailHtml = fs.readFileSync(path.join(__dirname, 'public/forgotPassword.html'), 'utf8')
 
   try {
     if (!Email.create(receipientEmail)) {
@@ -37,15 +30,17 @@ export const sendForgotPasswordEmail = async (
     }
 
     await resend.emails.send({
-      from: `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`,
+      from: fromEmail,
       to: receipientEmail,
       subject: 'Join the Pack',
-      html: forgotPasswordEmailHtml
+      html: sendForgotPasswordEmailHtml
     })
   }
   catch (error) {
-    return res.status(400).json({ message: error })
+    return res.status(400).json({ message: (error as Error).message })
   }
 
   res.status(200).json({ message: `Forgot email sent to ${receipientEmail}!` })
 }
+
+export default handler;
