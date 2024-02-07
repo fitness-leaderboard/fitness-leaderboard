@@ -13,7 +13,7 @@ import VerticalLayout from '../core/layouts/VerticalLayout'
 // ** Navigation Imports
 import VerticalNavItems from '../navigation/vertical'
 
-import VerticalAppBarContent from './components/vertical/AppBarContent'
+import VerticalAppBarContent from './AppBarContent'
 
 // ** Hook Import
 import { useSettings } from '../core/hooks/useSettings'

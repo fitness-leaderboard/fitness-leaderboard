@@ -4,8 +4,8 @@ import { ThemeColor } from '../../layouts/types'
 
 const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
   // ** Vars
-  const lightColor = '58, 53, 65'
-  const darkColor = '231, 227, 252'
+  const lightColor = '17, 34, 50'
+  const darkColor = '224, 251, 252'
   const mainColor = mode === 'light' ? lightColor : darkColor
 
   const primaryGradient = () => {
@@ -36,9 +36,9 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
     },
     mode: mode,
     primary: {
-      light: '#9E69FD',
-      main: '#9155FD',
-      dark: '#804BDF',
+      light: '#3d5a80',
+      main: '#3d5a80',
+      dark: '#3d5a80',
       contrastText: '#FFF'
     },
     secondary: {
@@ -94,8 +94,8 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
     },
     divider: `rgba(${mainColor}, 0.12)`,
     background: {
-      paper: mode === 'light' ? '#FFF' : '#312D4B',
-      default: mode === 'light' ? '#F4F5FA' : '#28243D'
+      paper: mode === 'light' ? '#FFF' : '#2A2A1C',
+      default: mode === 'light' ? '#F4F5FA' : '#1A1A1C'
     },
     action: {
       active: `rgba(${mainColor}, 0.54)`,
