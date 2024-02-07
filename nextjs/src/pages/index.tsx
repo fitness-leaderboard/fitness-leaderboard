@@ -1,26 +1,34 @@
 import React from 'react'
-import { Button } from '@mui/material'
+import { Button, TextField, Box } from '@mui/material'
 
 const Dashboard = () => {
+  const [ email, setEmail ] = React.useState('')
 
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value)
+  }
+  
   const handleSubmitSignUp = async (event: any) => {
     event.preventDefault();
-    const res = await fetch('/api/sendVerificationEmail', 
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ receipientEmail: 'lin.kenn@northeastern.edu', token: '1234HU' }),
-    })
+    const res = await fetch(`/api/email/validateEmailFormat?email=${email}`)
+    // {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ receipientEmail: 'lin.kenn@northeastern.edu', token: '1234HU' }),
+    // })
     const data = await res.json()
     console.log(data);
   };
 
   return (
-   <Button onClick={handleSubmitSignUp}>
-    Push
-   </Button>
+    <Box>
+      <TextField placeholder='Enter email' value = {email} onChange={ handleEmailChange } sx={{ width: 500, height: 20 }}/>
+    <Button onClick={handleSubmitSignUp}>
+      Check Email
+    </Button>
+   </Box>
   )
 }
 
