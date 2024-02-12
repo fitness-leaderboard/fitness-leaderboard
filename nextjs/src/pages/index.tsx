@@ -1,5 +1,7 @@
 import React from 'react'
-import { Button, TextField, Box } from '@mui/material'
+import { Button, TextField, Box, Grid } from '@mui/material'
+import About from '../view/AboutView'
+import ApexChartWrapper from 'src/core/style/ApexStyleWrapper'
 
 const Dashboard = () => {
   const [ email, setEmail ] = React.useState('')
@@ -23,12 +25,17 @@ const Dashboard = () => {
   };
 
   return (
-    <Box>
-      <TextField placeholder='Enter email' value = {email} onChange={ handleEmailChange } sx={{ width: 500, height: 20 }}/>
-    <Button onClick={handleSubmitSignUp}>
-      Check Email
-    </Button>
-   </Box>
+    <ApexChartWrapper>
+    <Grid item xl={12}>
+          {/* <TextField placeholder='Enter email' value = {email} onChange={ handleEmailChange }/>
+          <Button onClick={handleSubmitSignUp}>
+            Check Email
+          </Button> */}
+
+        <About/>
+
+    </Grid>
+    </ApexChartWrapper>
   )
 }
 

@@ -12,16 +12,16 @@ const auth_link = 'https://www.strava.com/oauth/token';
 // New route to initiate the OAuth flow
 export const initiateOAuth = (req: NextApiRequest, res: NextApiResponse) => {
   const { token } = req.body.id
-  res.redirect(
-    'https://www.strava.com/oauth/authorize?' +
-    querystring.stringify({
+    if (client_id) {
+    const params = new URLSearchParams({
       client_id: client_id,
-      redirect_uri: `http://localhost:8080/callback/${token}`,
+      redirect_uri: `http://localhost:3000/api/strava/callback/${token}`,
       response_type: 'code',
       approval_prompt: 'auto',
       scope: 'activity:read_all',
-    }),
-  );
+    });
+    res.redirect('https://www.strava.com/oauth/authorize?' + params.toString());
+  }
 };
 
 

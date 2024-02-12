@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import request from 'request';
 import querystring from 'querystring';
+import URLSearchParams from '@ungap/url-search-params'
 
 const client_id = process.env.STRAVA_CLIENT_ID;
 const client_secret = process.env.STRAVA_CLIENT_SECRET;
@@ -35,30 +36,27 @@ export const callback = async (req: NextApiRequest, res: NextApiResponse) => {
         const access_token = responseBody.access_token;
         const refresh_token = responseBody.refresh_token;
         const expires_at = responseBody.expires_at;
-        const epxires_in = responseBody.expires_in;
+        const expires_in = responseBody.expires_in;
         const scope = responseBody.scope;
 
         console.log(refresh_token);
         console.log(access_token);
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect(
-          'http://localhost:3000/home/' +
-          querystring.stringify({
+        if (access_token) {
+          const params = new URLSearchParams({
             access_token: access_token,
             refresh_token: refresh_token,
-            expires_at: expires_at,
-            expires_in: epxires_in,
+            expires_in: expires_in,
             scope: scope,
-          }),
-        );
-      } else {
-        res.redirect(
-          'http://localhost:3000/' +
-          querystring.stringify({
+          });
+          res.redirect('http://localhost:3000/api/strava?' + params.toString());
+        } else {
+          const params = new URLSearchParams({
             error: 'invalid_token',
-          }),
-        );
+          });
+          res.redirect('http://localhost:3000/api/strava?' + params.toString());
+        }
       }
     });
   } catch (error) {

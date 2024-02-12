@@ -45,6 +45,8 @@ const AppBarContent = (props: Props) => {
             <Menu />
           </IconButton>
         ) : null}
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
         <TextField
           size='small'
           sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
@@ -56,8 +58,6 @@ const AppBarContent = (props: Props) => {
             )
           }}
         />
-      </Box> 
-      <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         {/*<NotificationDropdown />
         <UserDropdown /> */}
@@ -66,4 +66,5 @@ const AppBarContent = (props: Props) => {
   )
 }
 
-export default AppBarContent
+
+  export default AppBarContent

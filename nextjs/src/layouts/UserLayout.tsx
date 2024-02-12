@@ -11,9 +11,9 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import VerticalLayout from '../core/layouts/VerticalLayout'
 
 // ** Navigation Imports
-import VerticalNavItems from '../navigation/vertical'
+import VerticalNavItems from '../navigation/VerticalBarContent'
 
-import VerticalAppBarContent from './AppBarContent'
+import VerticalAppBarContent from '../navigation/AppBarContent'
 
 // ** Hook Import
 import { useSettings } from '../core/hooks/useSettings'
