@@ -46,8 +46,8 @@ const StyledBoxForShadow = styled(Box)<BoxProps>({
   pointerEvents: 'none',
   width: 'calc(100% + 15px)',
   '&.d-block': {
-    display: 'block'
-  }
+    display: 'block',
+  },
 })
 
 const Navigation = (props: Props) => {
@@ -56,7 +56,7 @@ const Navigation = (props: Props) => {
     hidden,
     afterVerticalNavMenuContent,
     beforeVerticalNavMenuContent,
-    verticalNavMenuContent: userVerticalNavMenuContent
+    verticalNavMenuContent: userVerticalNavMenuContent,
   } = props
 
   // ** States
@@ -107,10 +107,12 @@ const Navigation = (props: Props) => {
       <StyledBoxForShadow
         ref={shadowRef}
         sx={{
-          background: `linear-gradient(${theme.palette.background.default} 40%,${hexToRGBA(
+          background: `linear-gradient(${
+            theme.palette.background.default
+          } 40%,${hexToRGBA(theme.palette.background.default, 0.1)} 95%,${hexToRGBA(
             theme.palette.background.default,
-            0.1
-          )} 95%,${hexToRGBA(theme.palette.background.default, 0.05)})`
+            0.05,
+          )})`,
         }}
       />
       <Box sx={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
@@ -119,20 +121,30 @@ const Navigation = (props: Props) => {
           {...(hidden
             ? {
                 onScroll: (container: any) => scrollMenu(container),
-                sx: { height: '100%', overflowY: 'auto', overflowX: 'hidden' }
+                sx: { height: '100%', overflowY: 'auto', overflowX: 'hidden' },
               }
             : {
                 options: { wheelPropagation: false },
                 onScrollY: (container: any) => scrollMenu(container),
-                containerRef: (ref: any) => handleInfiniteScroll(ref)
+                containerRef: (ref: any) => handleInfiniteScroll(ref),
               })}
         >
           {beforeVerticalNavMenuContent ? beforeVerticalNavMenuContent(props) : null}
-          <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
             {userVerticalNavMenuContent ? (
               userVerticalNavMenuContent(props)
             ) : (
-              <List className='nav-items' sx={{ transition: 'padding .25s ease', pr: 4.5 }}>
+              <List
+                className='nav-items'
+                sx={{ transition: 'padding .25s ease', pr: 4.5 }}
+              >
                 <VerticalNavItems
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}

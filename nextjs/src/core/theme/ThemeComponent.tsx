@@ -40,7 +40,7 @@ const ThemeComponent = (props: Props) => {
   // ** Continue theme creation and pass merged component overrides to CreateTheme function
   theme = createTheme(theme, {
     components: { ...overrides(theme) },
-    typography: { ...typography(theme) }
+    typography: { ...typography(theme) },
   })
 
   // ** Set responsive font sizes to true

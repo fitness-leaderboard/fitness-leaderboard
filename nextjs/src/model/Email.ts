@@ -1,7 +1,7 @@
 import InvalidParametersError, {
   INVALID_EMAIL_DOMAIN,
   INVALID_EMAIL_FORMAT,
-  INVALID_EMPTY_PARAMETER
+  INVALID_EMPTY_PARAMETER,
 } from './errors/InvalidParametersError'
 
 /**
@@ -10,12 +10,12 @@ import InvalidParametersError, {
 export class Email {
   private readonly email: string
 
-  private constructor (email: string) {
+  private constructor(email: string) {
     this.email = email
     Object.freeze(this)
   }
 
-  get value (): string {
+  get value(): string {
     return this.email
   }
 
@@ -26,7 +26,7 @@ export class Email {
    *
    * @returns An Email object if the email is valid, undefined otherwise.
    */
-  static create (email: string): Email | undefined {
+  static create(email: string): Email | undefined {
     if (Email._validate(email)) {
       return new Email(email)
     }
@@ -44,29 +44,31 @@ export class Email {
    *
    * returns true if the email is valid, throws an InvalidParametersError otherwise.
    */
-  private static _validate (email: string): boolean {
+  private static _validate(email: string): boolean {
     // Regular expression for basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if (!email) {
       // No email provided
-      throw new InvalidParametersError(INVALID_EMPTY_PARAMETER);
+      throw new InvalidParametersError(INVALID_EMPTY_PARAMETER)
     }
 
     if (!emailRegex.test(email)) {
       // Invalid email format
-      throw new InvalidParametersError(INVALID_EMAIL_FORMAT);
+      throw new InvalidParametersError(INVALID_EMAIL_FORMAT)
     }
 
     // Extract domain from the email
-    const [, domain] = email.split('@');
+    const [, domain] = email.split('@')
 
     // Check if the domain is 'northeastern.edu'
-    if (domain.toLowerCase() !== 'northeastern.edu' &&
-        domain.toLowerCase() !== 'husky.neu.edu') {
-      throw new InvalidParametersError(INVALID_EMAIL_DOMAIN);
+    if (
+      domain.toLowerCase() !== 'northeastern.edu' &&
+      domain.toLowerCase() !== 'husky.neu.edu'
+    ) {
+      throw new InvalidParametersError(INVALID_EMAIL_DOMAIN)
     }
 
-    return true;
+    return true
   }
 }

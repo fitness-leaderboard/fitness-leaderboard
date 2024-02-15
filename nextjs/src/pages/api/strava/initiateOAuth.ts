@@ -1,30 +1,28 @@
-import querystring from 'querystring';
-import dotenv from 'dotenv';
-import { NextApiRequest, NextApiResponse } from "next/types";
+import querystring from 'querystring'
+import dotenv from 'dotenv'
+import { NextApiRequest, NextApiResponse } from 'next/types'
 
-dotenv.config();
+dotenv.config()
 
-const client_id = process.env.STRAVA_CLIENT_ID;
-const client_secret = process.env.STRAVA_CLIENT_SECRET;
+const client_id = process.env.STRAVA_CLIENT_ID
+const client_secret = process.env.STRAVA_CLIENT_SECRET
 // const STRAVA_API_URL = 'https://www.strava.com/api/v3';
-const auth_link = 'https://www.strava.com/oauth/token';
+const auth_link = 'https://www.strava.com/oauth/token'
 
 // New route to initiate the OAuth flow
 export const initiateOAuth = (req: NextApiRequest, res: NextApiResponse) => {
   const { token } = req.body.id
-    if (client_id) {
+  if (client_id) {
     const params = new URLSearchParams({
       client_id: client_id,
       redirect_uri: `http://localhost:3000/api/strava/callback/${token}`,
       response_type: 'code',
       approval_prompt: 'auto',
       scope: 'activity:read_all',
-    });
-    res.redirect('https://www.strava.com/oauth/authorize?' + params.toString());
+    })
+    res.redirect('https://www.strava.com/oauth/authorize?' + params.toString())
   }
-};
-
-
+}
 
 // get athlete
 // export const getAthlete = async (req: Request, res: Response) => {

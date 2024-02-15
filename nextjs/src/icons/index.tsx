@@ -100,5 +100,5 @@ const icons = {
   AccountDetailsOutline,
   AccountArrowLeftOutline,
   AccountArrowRightOutline,
-  AccountBoxMultipleOutline
+  AccountBoxMultipleOutline,
 }

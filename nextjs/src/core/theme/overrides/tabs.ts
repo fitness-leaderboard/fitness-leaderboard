@@ -10,20 +10,20 @@ const Tabs = (theme: Theme) => {
           marginRight: theme.spacing(4),
           borderRight: `1px solid ${theme.palette.divider}`,
           '& .MuiTab-root': {
-            minWidth: 130
-          }
-        }
-      }
+            minWidth: 130,
+          },
+        },
+      },
     },
     MuiTab: {
       styleOverrides: {
         textColorSecondary: {
           '&.Mui-selected': {
-            color: theme.palette.text.secondary
-          }
-        }
-      }
-    }
+            color: theme.palette.text.secondary,
+          },
+        },
+      },
+    },
   }
 }
 

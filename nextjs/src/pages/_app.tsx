@@ -56,14 +56,18 @@ const App = (props: ExtendedAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
-  const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
+  const getLayout = Component.getLayout ?? ((page) => <UserLayout>{page}</UserLayout>)
 
   return (
     <CacheProvider value={emotionCache}>
       <SettingsProvider>
         <SettingsConsumer>
           {({ settings }) => {
-            return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
+            return (
+              <ThemeComponent settings={settings}>
+                {getLayout(<Component {...pageProps} />)}
+              </ThemeComponent>
+            )
           }}
         </SettingsConsumer>
       </SettingsProvider>

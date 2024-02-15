@@ -1,5 +1,5 @@
 import { Email } from 'src/model/Email'
-import { NextApiRequest, NextApiResponse } from "next/types";
+import { NextApiRequest, NextApiResponse } from 'next/types'
 import { Resend } from 'resend'
 import { sendForgotPasswordEmailHtml } from 'src/pages/forgotPassword'
 
@@ -17,7 +17,7 @@ import { sendForgotPasswordEmailHtml } from 'src/pages/forgotPassword'
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const receipientEmail = req.body
-  const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
+  const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`
   const resend = new Resend(process.env.RESEND_API_KEY)
 
   if (!receipientEmail) {
@@ -26,21 +26,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     if (!Email.create(receipientEmail)) {
-      return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
+      return res.status(400).json({
+        error:
+          'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu',
+      })
     }
 
     await resend.emails.send({
       from: fromEmail,
       to: receipientEmail,
       subject: 'Join the Pack',
-      html: sendForgotPasswordEmailHtml
+      html: sendForgotPasswordEmailHtml,
     })
-  }
-  catch (error) {
+  } catch (error) {
     return res.status(400).json({ message: (error as Error).message })
   }
 
   res.status(200).json({ message: `Forgot email sent to ${receipientEmail}!` })
 }
 
-export default handler;
+export default handler

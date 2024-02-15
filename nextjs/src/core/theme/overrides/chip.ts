@@ -7,15 +7,15 @@ const Chip = (theme: Theme) => {
       styleOverrides: {
         outlined: {
           '&.MuiChip-colorDefault': {
-            borderColor: `rgba(${theme.palette.customColors.main}, 0.22)`
-          }
+            borderColor: `rgba(${theme.palette.customColors.main}, 0.22)`,
+          },
         },
         deleteIcon: {
           width: 18,
-          height: 18
-        }
-      }
-    }
+          height: 18,
+        },
+      },
+    },
   }
 }
 

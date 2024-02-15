@@ -5,10 +5,10 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Dashboard',
-      path: '/'
+      path: '/',
     },
     {
-      sectionTitle: 'Fitness'
+      sectionTitle: 'Fitness',
     },
     // {
     //   title: 'Login',
@@ -46,7 +46,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Social',
       path: '/social',
-    }
+    },
   ]
 }
 

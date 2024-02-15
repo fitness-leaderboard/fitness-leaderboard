@@ -81,7 +81,7 @@ const Overrides = (theme: Theme) => {
     pagination,
     MuiTypography,
     dateTimePicker,
-    MuiToggleButton
+    MuiToggleButton,
   )
 }
 

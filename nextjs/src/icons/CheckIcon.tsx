@@ -1,7 +1,7 @@
 // CheckIcon.tsx
 
-import React from 'react';
-import IconProps from './IconProps';
+import React from 'react'
+import IconProps from './IconProps'
 
 const CheckIcon: React.FC<IconProps> = ({ width, height, color = '#00ff00' }) => {
   return (
@@ -10,7 +10,8 @@ const CheckIcon: React.FC<IconProps> = ({ width, height, color = '#00ff00' }) =>
       height={height}
       viewBox='0 -0.5 25 25'
       fill='none'
-      xmlns='http://www.w3.org/2000/svg'>
+      xmlns='http://www.w3.org/2000/svg'
+    >
       <path
         fillRule='evenodd'
         clipRule='evenodd'
@@ -28,7 +29,7 @@ const CheckIcon: React.FC<IconProps> = ({ width, height, color = '#00ff00' }) =>
         strokeLinejoin='round'
       />
     </svg>
-  );
-};
+  )
+}
 
-export default CheckIcon;
+export default CheckIcon

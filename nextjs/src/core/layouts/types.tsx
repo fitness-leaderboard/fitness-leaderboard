@@ -3,7 +3,13 @@ import { Settings } from '../context/settingsContext'
 
 export type ContentWidth = 'full' | 'boxed'
 
-export type ThemeColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
+export type ThemeColor =
+  | 'primary'
+  | 'secondary'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'success'
 
 export type NavLink = {
   path?: string
@@ -15,7 +21,14 @@ export type NavLink = {
   externalLink?: boolean
   openInNewTab?: boolean
   icon?: string | string[] | ReactNode
-  badgeColor?: 'default' | 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info'
+  badgeColor?:
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'info'
 }
 
 export type NavSectionTitle = {

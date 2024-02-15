@@ -15,7 +15,7 @@ const ScrollToTopStyled = styled('div')(({ theme }) => ({
   zIndex: 11,
   position: 'fixed',
   right: theme.spacing(6),
-  bottom: theme.spacing(10)
+  bottom: theme.spacing(10),
 }))
 
 const ScrollToTop = (props: ScrollToTopProps) => {
@@ -25,7 +25,7 @@ const ScrollToTop = (props: ScrollToTopProps) => {
   // ** init trigger
   const trigger = useScrollTrigger({
     threshold: 400,
-    disableHysteresis: true
+    disableHysteresis: true,
   })
 
   const handleClick = () => {
@@ -37,7 +37,11 @@ const ScrollToTop = (props: ScrollToTopProps) => {
 
   return (
     <Zoom in={trigger}>
-      <ScrollToTopStyled className={className} onClick={handleClick} role='presentation'>
+      <ScrollToTopStyled
+        className={className}
+        onClick={handleClick}
+        role='presentation'
+      >
         {children}
       </ScrollToTopStyled>
     </Zoom>

@@ -30,28 +30,28 @@ const themeOptions = (settings: Settings): ThemeOptions => {
         'sans-serif',
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"'
-      ].join(',')
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
     shadows: shadows(mode),
     ...spacing,
     breakpoints: breakpoints(),
     shape: {
-      borderRadius: 6
+      borderRadius: 6,
     },
     mixins: {
       toolbar: {
-        minHeight: 64
-      }
-    }
+        minHeight: 64,
+      },
+    },
   }
 
   return deepmerge(themeConfig, {
     palette: {
       primary: {
-        ...themeConfig.palette[themeColor]
-      }
-    }
+        ...themeConfig.palette[themeColor],
+      },
+    },
   })
 }
 

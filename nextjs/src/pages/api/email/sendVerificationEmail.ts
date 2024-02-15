@@ -1,5 +1,5 @@
 import { Email } from 'src/model/Email'
-import { NextApiRequest, NextApiResponse } from "next/types";
+import { NextApiRequest, NextApiResponse } from 'next/types'
 import { Resend } from 'resend'
 import { sendVerificationEmailHtml } from 'src/pages/verificationEmail'
 
@@ -15,7 +15,7 @@ import { sendVerificationEmailHtml } from 'src/pages/verificationEmail'
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { receipientEmail, token } = req.body
-  const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
+  const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`
   const resend = new Resend(process.env.RESEND_API_KEY)
 
   try {
@@ -28,27 +28,36 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (!Email.create(receipientEmail)) {
-      return res.status(400).json({ error: 'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu' })
+      return res.status(400).json({
+        error:
+          'Invalid email domain provided. Must be northeastern.edu or husky.neu.edu',
+      })
     }
 
     if (token.length !== 6 || !token.match(/^[0-9A-Z]+$/)) {
-      return res.status(400).json({ error: 'Invalid token provided. Must be six characters and contain only 0-9A-Z' })
+      return res.status(400).json({
+        error: 'Invalid token provided. Must be six characters and contain only 0-9A-Z',
+      })
     }
 
-    const tokenizedVerificationEmailHtml = sendVerificationEmailHtml.replace('verifyTokenPlaceholder', token)
+    const tokenizedVerificationEmailHtml = sendVerificationEmailHtml.replace(
+      'verifyTokenPlaceholder',
+      token,
+    )
 
     await resend.emails.send({
       from: fromEmail,
       to: receipientEmail,
       subject: 'Join the Pack',
-      html: tokenizedVerificationEmailHtml
+      html: tokenizedVerificationEmailHtml,
     })
-  }
-  catch (error) {
+  } catch (error) {
     return res.status(400).json({ message: (error as Error).message })
   }
 
-  return res.status(200).json({ message: `Email sent to ${receipientEmail} with token ${token}!` })
+  return res
+    .status(200)
+    .json({ message: `Email sent to ${receipientEmail} with token ${token}!` })
 }
 
-export default handler;
+export default handler

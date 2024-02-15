@@ -7,11 +7,11 @@ const Switch = (theme: Theme) => {
       styleOverrides: {
         root: {
           '& .MuiSwitch-track': {
-            backgroundColor: `rgb(${theme.palette.customColors.main})`
-          }
-        }
-      }
-    }
+            backgroundColor: `rgb(${theme.palette.customColors.main})`,
+          },
+        },
+      },
+    },
   }
 }
 

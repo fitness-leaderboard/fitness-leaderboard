@@ -26,7 +26,7 @@ import ScrollToTop from '../components/ScrollToTop'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
-  display: 'flex'
+  display: 'flex',
 })
 
 const MainContentWrapper = styled(Box)<BoxProps>({
@@ -34,7 +34,7 @@ const MainContentWrapper = styled(Box)<BoxProps>({
   minWidth: 0,
   display: 'flex',
   minHeight: '100vh',
-  flexDirection: 'column'
+  flexDirection: 'column',
 })
 
 const ContentWrapper = styled('main')(({ theme }) => ({
@@ -44,8 +44,8 @@ const ContentWrapper = styled('main')(({ theme }) => ({
   transition: 'padding .25s ease-in-out',
   [theme.breakpoints.down('sm')]: {
     paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
-  }
+    paddingRight: theme.spacing(4),
+  },
 }))
 
 const VerticalLayout = (props: LayoutProps) => {
@@ -84,8 +84,8 @@ const VerticalLayout = (props: LayoutProps) => {
               ...(contentWidth === 'boxed' && {
                 mx: 'auto',
                 '@media (min-width:1440px)': { maxWidth: 1440 },
-                '@media (min-width:1200px)': { maxWidth: '100%' }
-              })
+                '@media (min-width:1200px)': { maxWidth: '100%' },
+              }),
             }}
           >
             {children}
@@ -93,7 +93,6 @@ const VerticalLayout = (props: LayoutProps) => {
 
           {/* Footer Component */}
           <Footer {...props} />
-
         </MainContentWrapper>
       </VerticalLayoutWrapper>
 

@@ -6,10 +6,10 @@ const Divider = (theme: Theme) => {
     MuiDivider: {
       styleOverrides: {
         root: {
-          margin: `${theme.spacing(2)} 0`
-        }
-      }
-    }
+          margin: `${theme.spacing(2)} 0`,
+        },
+      },
+    },
   }
 }
 

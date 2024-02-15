@@ -34,8 +34,18 @@ const AppBarContent = (props: Props) => {
   const hiddenSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Box
+        className='actions-left'
+        sx={{ mr: 2, display: 'flex', alignItems: 'center' }}
+      >
         {hidden ? (
           <IconButton
             color='inherit'
@@ -55,7 +65,7 @@ const AppBarContent = (props: Props) => {
               <InputAdornment position='start'>
                 <Magnify fontSize='small' />
               </InputAdornment>
-            )
+            ),
           }}
         />
         <ModeToggler settings={settings} saveSettings={saveSettings} />
@@ -66,5 +76,4 @@ const AppBarContent = (props: Props) => {
   )
 }
 
-
-  export default AppBarContent
+export default AppBarContent

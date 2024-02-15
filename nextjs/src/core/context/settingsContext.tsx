@@ -24,13 +24,13 @@ export type SettingsContextValue = {
 const initialSettings: Settings = {
   themeColor: 'primary',
   mode: themeConfig.mode,
-  contentWidth: themeConfig.contentWidth
+  contentWidth: themeConfig.contentWidth,
 }
 
 // ** Create Context
 export const SettingsContext = createContext<SettingsContextValue>({
   saveSettings: () => null,
-  settings: initialSettings
+  settings: initialSettings,
 })
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
@@ -41,7 +41,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     setSettings(updatedSettings)
   }
 
-  return <SettingsContext.Provider value={{ settings, saveSettings }}>{children}</SettingsContext.Provider>
+  return (
+    <SettingsContext.Provider value={{ settings, saveSettings }}>
+      {children}
+    </SettingsContext.Provider>
+  )
 }
 
 export const SettingsConsumer = SettingsContext.Consumer
