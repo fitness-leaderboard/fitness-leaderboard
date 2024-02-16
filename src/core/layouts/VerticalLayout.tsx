@@ -13,11 +13,11 @@ import ArrowUp from 'mdi-material-ui/ArrowUp'
 import themeConfig from '../../configs/themeConfig'
 
 // ** Type Import
-import { LayoutProps } from '../layouts/types'
+import { LayoutProps } from './types'
 
 // ** Components
-import AppBar from '../layouts/vertical/appBar'
-import Navigation from '../layouts/vertical/navigation'
+import AppBar from './vertical/appBar'
+import Navigation from './vertical/navigation'
 import Footer from '../footer'
 import ScrollToTop from '../components/ScrollToTop'
 
