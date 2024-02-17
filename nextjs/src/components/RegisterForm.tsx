@@ -27,8 +27,8 @@ const RegisterForm = () => {
 
   return (
     <>
-      <form action='#' method='post' onSubmit={handleSubmitSignin}>
-        <div>
+      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignin}>
+        <div className='input-group'>
           <div>
             <input type='text' placeholder='Northeastern Email' name='email' required />
           </div>
@@ -38,7 +38,13 @@ const RegisterForm = () => {
           <div>
             <input type='password' placeholder='Confirm' name='confirmPassword' required />
           </div>
-          <button type='submit'>Signup</button>
+          <button
+            type='submit'
+            style={{
+              backgroundColor: '#007bff',
+            }}>
+            Signup
+          </button>
         </div>
       </form>
       <p>
