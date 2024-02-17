@@ -3,6 +3,7 @@ import NavBar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 import { getUser } from '@/lib/getUser';
 import '@css/sidebar.css';
+import '@css/navbar.css';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
