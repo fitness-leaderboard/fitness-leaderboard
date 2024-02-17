@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from '@/lib/db';
 import * as bcrypt from 'bcrypt';
 import { registrationValidator } from '@/lib/validators';
 import { signJwtAccessToken } from '@lib/jwt';
