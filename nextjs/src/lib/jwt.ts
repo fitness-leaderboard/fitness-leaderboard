@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import { MAX_AGE } from '@/constants';
 
 dotenv.config();
-console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
 
 interface SignOption {
   expiresIn?: string | number;
