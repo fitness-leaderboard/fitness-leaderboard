@@ -1,13 +1,15 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
 
   const handleSubmitSignin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const payLoad = {
       email: event.currentTarget.email.value,
@@ -23,10 +25,12 @@ const RegisterForm = () => {
       const error = err as AxiosError;
       alert(error.message);
     }
+    setIsLoading(false);
   };
 
   return (
     <>
+      <h1>Register</h1>
       <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignin}>
         <div className='input-group'>
           <div>
@@ -40,6 +44,7 @@ const RegisterForm = () => {
           </div>
           <button
             type='submit'
+            disabled={isLoading}
             style={{
               backgroundColor: '#007bff',
             }}>

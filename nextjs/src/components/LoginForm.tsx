@@ -1,13 +1,15 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
 
   const handleSubmitSignin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const payLoad = {
       email: event.currentTarget.email.value,
@@ -23,6 +25,7 @@ const LoginForm = () => {
       const error = err as AxiosError;
       alert(error.message);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -38,6 +41,7 @@ const LoginForm = () => {
           </div>
           <button
             type='submit'
+            disabled={isLoading}
             style={{
               backgroundColor: '#007bff',
             }}>

@@ -18,8 +18,6 @@ export async function GET() {
   try {
     const decoded = verifyJwt(token.value);
 
-    console.log('decoded:', decoded);
-
     const response = {
       user: decoded,
     };
