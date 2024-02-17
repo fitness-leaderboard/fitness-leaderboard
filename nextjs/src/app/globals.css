@@ -45,3 +45,9 @@ nav {
 a {
   outline: none;
 }
+
+svg {
+  width: 21px;
+  height: 21px;
+  font-size: 21px;
+}

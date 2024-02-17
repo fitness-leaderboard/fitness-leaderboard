@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+
 import './globals.css';
 import StyledComponentsRegistry from '@/context/StyledComponentsContext';
 
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>
+      <body className='min-h-screen'>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>

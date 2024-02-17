@@ -1,5 +1,6 @@
 import NavBar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+import '@css/sidebar.css';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -8,7 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <Sidebar />
         <div className='wrapper' style={{ flex: 1 }}>
           <NavBar />
-          {children}
+          <div>{children}</div>
         </div>
       </div>
     </main>

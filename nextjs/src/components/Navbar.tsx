@@ -1,6 +1,9 @@
 'use client';
 import React from 'react';
 import styled from 'styled-components';
+import { CgProfile } from 'react-icons/cg';
+import { FaSyncAlt } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Header = styled.header`
   height: 60px;
@@ -28,15 +31,18 @@ const HeaderNavItem = styled.div`
   position: relative;
 `;
 
-const HeaderNavLink = styled.a`
+const HeaderNavLink = styled(Link)`
   width: 50px;
   height: 60px;
   line-height: 60px;
   text-align: center;
   font-size: 20px;
   margin: 0;
-  display: block;
+  display: flex;
   position: relative;
+
+  justify-content: center;
+  align-items: center;
 `;
 
 export default function NavBar() {
@@ -45,10 +51,14 @@ export default function NavBar() {
       <div>Back</div>
       <HeaderNav>
         <HeaderNavItem>
-          <HeaderNavLink href='#'>Sync</HeaderNavLink>
+          <HeaderNavLink href='#'>
+            <FaSyncAlt />
+          </HeaderNavLink>
         </HeaderNavItem>
         <HeaderNavItem>
-          <HeaderNavLink href='/profile'>Profile</HeaderNavLink>
+          <HeaderNavLink href='/profile'>
+            <CgProfile />
+          </HeaderNavLink>
         </HeaderNavItem>
       </HeaderNav>
     </Header>
