@@ -3,15 +3,19 @@ const prisma = new PrismaClient();
 import * as bcrypt from 'bcrypt';
 import { registrationValidator } from '@/lib/validators';
 import { signJwtAccessToken } from '@lib/jwt';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { COOKIE_NAME, MAX_AGE } from '@/constants';
+import { serialize } from 'cookie';
 
 export async function POST(request: NextRequest) {
-  const { email, password } = await request.json();
+  const body = await request.json();
+
+  const { email, password } = body;
 
   const { errors, valid } = registrationValidator(email, password);
 
   if (!valid) {
-    return new Response(JSON.stringify(errors), {
+    return new NextResponse(JSON.stringify(errors), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -40,17 +44,27 @@ export async function POST(request: NextRequest) {
       email: user.email,
     };
 
-    const jwtToken = signJwtAccessToken(userWithoutPwd);
+    const expires = {
+      expiresIn: MAX_AGE,
+    };
+
+    const jwtToken = signJwtAccessToken(userWithoutPwd, expires);
+
+    const serializedToken = serialize(COOKIE_NAME, jwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: MAX_AGE,
+      path: '/',
+    });
 
     const result = {
-      id: user.id,
-      email: user.email,
-      jwtToken,
+      message: 'Registration successful',
     };
 
     return new Response(JSON.stringify(result), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Set-Cookie': serializedToken, 'Content-Type': 'application/json' },
     });
   } else {
     return new Response(JSON.stringify({ error: 'User already exists' }), {

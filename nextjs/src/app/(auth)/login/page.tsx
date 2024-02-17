@@ -1,10 +1,10 @@
-import SigninForm from './signin-form';
+import LoginForm from '@/components/LoginForm';
 
 export default function Home() {
   return (
-    <div style={{ width: '100%', padding: 30, justifyContent: 'center', alignContent: 'center' }}>
-      <h1>Signup</h1>
-      <SigninForm />
+    <div>
+      <h1 style={{ fontSize: 20 }}>Log In</h1>
+      <LoginForm />
     </div>
   );
 }

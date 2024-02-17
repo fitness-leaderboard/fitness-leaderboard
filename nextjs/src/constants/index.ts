@@ -31,3 +31,6 @@ export const navbarLinks = [
     icon: './vercel.svg',
   },
 ];
+
+export const COOKIE_NAME = 'JwtToken';
+export const MAX_AGE = 60 * 60 * 24 * 7;

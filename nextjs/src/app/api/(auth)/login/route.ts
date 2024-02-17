@@ -5,14 +5,12 @@ import { loginValidator } from '@/lib/validators';
 import { signJwtAccessToken } from '@lib/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 import { serialize } from 'cookie';
+import { COOKIE_NAME, MAX_AGE } from '@/constants';
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
   const { email, password } = body;
-
-  console.log('email:', email);
-  console.log('password:', password);
 
   const { errors, valid } = loginValidator(email, password);
 
@@ -32,15 +30,13 @@ export async function POST(request: NextRequest) {
   if (user && (await bcrypt.compare(password, user.password))) {
     const { password, createdAt, updatedAt, ...rest } = user;
 
-    const MAX_AGE = 60 * 60 * 24 * 7;
-
     const expires = {
-      expiresIn: 60 * 60 * 24 * 7,
+      expiresIn: MAX_AGE,
     };
 
     const jwtToken = signJwtAccessToken(rest, expires);
 
-    const serializedToken = serialize('OutSiteJWT', jwtToken, {
+    const serializedToken = serialize(COOKIE_NAME, jwtToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
@@ -50,10 +46,8 @@ export async function POST(request: NextRequest) {
 
     const result = {
       message: 'Login successful',
-      // These two will not be needed, cookie has jwtToken and ...rest is unneeded cuz of token
-      ...rest,
-      jwtToken,
     };
+
     return new Response(JSON.stringify(result), {
       status: 200,
       headers: { 'Set-Cookie': serializedToken, 'Content-Type': 'application/json' },

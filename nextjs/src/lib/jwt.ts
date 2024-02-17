@@ -1,5 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { MAX_AGE } from '@/constants';
 
 dotenv.config();
 console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
@@ -9,7 +10,7 @@ interface SignOption {
 }
 
 const DEFAULT_SIGN_OPTION: SignOption = {
-  expiresIn: '7d',
+  expiresIn: MAX_AGE,
 };
 
 export function signJwtAccessToken(payload: JwtPayload, option: SignOption = DEFAULT_SIGN_OPTION) {
@@ -22,8 +23,7 @@ export function verifyJwt(token: string) {
   try {
     const secretKey = process.env.JWT_SECRET || '';
     const decoded = jwt.verify(token, secretKey);
-    return decoded as JwtPayload;
   } catch (error) {
-    console.error('Error in verifyJwt', error);
+    throw new Error('Invalid token');
   }
 }
