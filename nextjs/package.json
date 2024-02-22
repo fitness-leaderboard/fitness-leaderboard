@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma db punpmsh && npx prisma generate && next build",
+    "build": "npx prisma db push && npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.10",
     "@prisma/client": "^5.9.1",
     "axios": "^1.6.7",
