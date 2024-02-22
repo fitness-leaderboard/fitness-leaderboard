@@ -1,7 +1,6 @@
 import React from "react";
 import { BadgeProps } from "@/components/Badges/Badges";
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import { Avatar, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { Roboto } from 'next/font/google'
  

@@ -2,10 +2,7 @@
 
 import React from "react";
 import { GenericBadge } from "@components/Badges/GenericBadges";
-
-export type BadgeRank = 'bronze' | 'silver' | 'gold'
-
-export type BadgeType = 'running' | 'walking' | 'hiking' | 'swimming' | 'biking' | 'sleeping' | 'health'
+import { BadgeRank, BadgeType } from "@lib/types";
 
 
 export type BadgeProps = {

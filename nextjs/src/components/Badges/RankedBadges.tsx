@@ -1,7 +1,6 @@
 import React from 'react';
-import { Badge, BadgeProps, BadgeRank } from '@components/Badges/Badges';
+import { Badge, BadgeProps } from '@components/Badges/Badges';
 import { Box } from '@mui/system';
-import Avatar from '@mui/material/Avatar';
 
 // Different Rank components for each rank type
 const BronzeRank : React.FC<BadgeProps> = (props) => {
