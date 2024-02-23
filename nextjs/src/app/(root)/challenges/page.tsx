@@ -19,7 +19,7 @@ export default function Challenges() {
       </Grid>
       <Grid item xs={12}>
         <Paper elevation={4} sx={{ padding: 1, backgroundColor: '#FAFAFA' }}>
-          <ChallengeList />
+          <ChallengeList /> 
         </Paper>
       </Grid>
       <Grid item xs={12}>

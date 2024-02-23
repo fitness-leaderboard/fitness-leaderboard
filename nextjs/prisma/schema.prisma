@@ -43,6 +43,7 @@ model Badge {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   ProfileBadge ProfileBadge[]
+  Challenge    Challenge[]
 }
 
 model ProfileBadge {
@@ -91,10 +92,24 @@ model Leaderboard {
   @@unique([activityTypeId, startDate, endDate])
 }
 
+model Challenge {
+  id             Int          @id @default(autoincrement())
+  name           String
+  description    String
+  activityTypeId Int
+  createdAt      DateTime     @default(now())
+  startDate      DateTime     @default(now())
+  endDate        DateTime     @default(now())
+  badgeId        Int
+  Badge          Badge        @relation(fields: [badgeId], references: [id])
+  ActivityType   ActivityType @relation(fields: [activityTypeId], references: [id])
+}
+
 model ActivityType {
   id          Int           @id @default(autoincrement())
   name        String
   Leaderboard Leaderboard[]
+  Challenge   Challenge[]
 }
 
 model RunningActivity {
