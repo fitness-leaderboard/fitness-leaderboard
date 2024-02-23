@@ -1,0 +1,9 @@
+.hslist {
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+  max-width: 1000px;
+  overflow: scroll;
+  margin: 0 auto;
+  background-color: white;
+}
