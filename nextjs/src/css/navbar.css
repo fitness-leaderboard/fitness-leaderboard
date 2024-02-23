@@ -3,6 +3,7 @@
   padding: 0 15px 0 15px;
   position: fixed;
   top: 0;
+  left: 273px;
   transition: width 250ms;
   transition-delay: 250ms;
   z-index: 60;

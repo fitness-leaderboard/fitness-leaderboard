@@ -18,7 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: floralwhite;
+  background-color: white;
   min-height: 100vh;
   font: 400 14px/22px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: black;
@@ -38,9 +38,20 @@ nav {
 .wrapper {
   display: flex;
   justify-content: center;
-
   background-color: white;
 }
+
+.page-wrapper {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  max-width: calc(100vw - 273px);
+  left: 273px;
+  top: 60px;
+  background-color: white;
+}
+  
 
 a {
   outline: none;

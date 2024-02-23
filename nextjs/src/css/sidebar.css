@@ -8,14 +8,14 @@
   transition: width 250ms ease;
   min-height: 100vh;
   overflow: hidden;
+  position: fixed;
 }
 
 .sidebar-list-wrapper {
   font-weight: 100;
-  overflow: auto;
+  overflow: hidden;
   height: calc(100vh - 75px);
   padding-top: 15px;
-  position: fixed;
   top: 60px;
   width: 273px;
   box-sizing: border-box;

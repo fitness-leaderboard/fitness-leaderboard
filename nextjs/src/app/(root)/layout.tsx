@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Sidebar />
         <div className='wrapper' style={{ flex: 1 }}>
           <NavBar />
-          <div>{children}</div>
+          <div className='page-wrapper' style={{ flex: 1 }}>{children}</div>
         </div>
       </div>
     </main>
