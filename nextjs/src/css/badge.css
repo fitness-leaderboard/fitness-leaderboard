@@ -1,0 +1,16 @@
+.badge-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.badge-description {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border: 3px solid #000;
+  border-radius: 10px;
+}

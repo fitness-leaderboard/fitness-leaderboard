@@ -1,9 +1,9 @@
 'use client'
 
 import React from "react";
-import { GenericBadge } from "@components/Badges/GenericBadges";
 import { BadgeRank, BadgeType } from "@lib/types";
-
+import { Avatar, Typography } from '@mui/material';
+import '@css/badge.css';
 
 export type BadgeProps = {
   name: string;
@@ -67,6 +67,38 @@ const HealthBadge : React.FC<BadgeProps> = (props) => {
     <GenericBadge color = 'pink' image = './badges/healthbadge.png' {...props} />
   )
 };
+
+export const GenericBadge : React.FC<BadgeProps> = (prop) =>{
+  let {name, image, color, size} = prop;
+  if (image === undefined)
+    image = './badge/runningbadge.png';
+
+  const badgeContainerStyle = {
+    width: `${size}px`,
+    height: `${size * 0.875}px`,
+  };
+
+  const descriptionStyle = {
+    height: `${size * 0.125}px`,
+    width: `${size}px`,
+    backgroundColor: color,
+  };
+  
+  return (
+      <div className='badge-container' style={badgeContainerStyle}>
+        <Avatar 
+          alt="Badge Image"
+          sx={{ width: `${size}px`, height: `${size}px`, border: `${size * 0.02}px solid white`}}
+          src={image}
+        />
+        <div className='badge-description' style={descriptionStyle}>
+          <Typography align="center" style={{ fontSize: `${size * 0.05}px`, fontWeight: 'bold' }} >
+            {name}
+          </Typography>
+        </div>
+      </div>
+  );
+}
 
 
 export const Badge : React.FC<BadgeProps> = (props) => {
