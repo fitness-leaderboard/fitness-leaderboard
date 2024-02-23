@@ -11,7 +11,7 @@ export type BadgeProps = {
   rank?: BadgeRank;
   type: BadgeType;
   date?: string;
-  clickable?: boolean;
+  disabled?: boolean;
   image?: string;
   borderImage?: string;
   size: number;
