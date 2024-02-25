@@ -10,7 +10,7 @@ import '@css/list.css';
 
 export default function Challenges() {
   return (
-    <Grid container padding={10} spacing={5}>
+    <Grid container padding={3} spacing={5}>
       <Grid item xs={12}>
         <Typography variant='subtitle1' fontWeight='light'>
           Challenges
@@ -18,9 +18,9 @@ export default function Challenges() {
         <Typography variant='h4'>Join a Challenge</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Paper elevation={4} sx={{ padding: 1, backgroundColor: '#FAFAFA' }}>
+
           <ChallengeList /> 
-        </Paper>
+
       </Grid>
       <Grid item xs={12}>
         <Typography variant='h4'>Current Challenges</Typography>
