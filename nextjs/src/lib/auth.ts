@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import GithubProvider from 'next-auth/providers/github';
 import prisma from './db';
 
 export const authConfig: NextAuthOptions = {
@@ -40,7 +41,5 @@ export const authConfig: NextAuthOptions = {
     }),
   ],
 };
-function GithubProvider(arg0: { clientId: string | undefined; clientSecret: string | undefined; }): import("next-auth/providers/index").Provider {
-  throw new Error('Function not implemented.');
-}
 
+export default authConfig;
