@@ -6,23 +6,26 @@ dotenv.config();
 
 const client_id = process.env.STRAVA_CLIENT_ID;
 const client_secret = process.env.STRAVA_CLIENT_SECRET;
-// const STRAVA_API_URL = 'https://www.strava.com/api/v3';
 const auth_link = 'https://www.strava.com/oauth/token';
 
 // New route to initiate the OAuth flow
-export const initiateOAuth = (req: NextApiRequest, res: NextApiResponse) => {
-  const { token } = req.body.id
-    if (client_id) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('Initiating OAuth flow');
+  console.log('client_id:', client_id)
+  if (client_id) {
+    console.log('Client ID:', client_id);
     const params = new URLSearchParams({
       client_id: client_id,
-      redirect_uri: `http://localhost:3000/api/strava/callback/${token}`,
+      redirect_uri: `http://localhost:3000/api/strava/callback/`,
       response_type: 'code',
       approval_prompt: 'auto',
       scope: 'activity:read_all',
     });
     res.redirect('https://www.strava.com/oauth/authorize?' + params.toString());
-  }
+  } console.log('done')
 };
+
+export default handler
 
 
 
