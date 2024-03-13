@@ -8,22 +8,22 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const validateUser = async () => {
-      const { user } = await getUser();
-      if (user) {
-        console.error(user);
-        router.push('/profile');
-        return;
-      }
-      setIsSuccess(true);
-    };
-    validateUser();
-  }, [router]);
+  // useEffect(() => {
+  //   const validateUser = async () => {
+  //     const { user } = await getUser();
+  //     if (user) {
+  //       console.error(user);
+  //       router.push('/profile');
+  //       return;
+  //     }
+  //     setIsSuccess(true);
+  //   };
+  //   validateUser();
+  // }, [router]);
 
-  if (!isSuccess) {
-    return <div>Loading...</div>;
-  }
+  // if (!isSuccess) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <div
       style={{
