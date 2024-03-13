@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { GoogleSignInButton, GithubSignInButton } from './AuthButton';
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +53,8 @@ const RegisterForm = () => {
           </button>
         </div>
       </form>
+      <GoogleSignInButton/>
+      <GithubSignInButton/>
       <p>
         {`Don't have an account? `} <a href='/login'>Login</a>
       </p>
