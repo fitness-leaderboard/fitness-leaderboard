@@ -8,24 +8,64 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  email     String     @unique
-  password  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  APIToken  APIToken[]
-  Profile   Profile?
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?  @map("email_verified")
+  image         String?
+  password      String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  APIToken      APIToken[]
+  Profile       Profile?
+  Accounts      Account[]
+  Session       Session[]
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  refresh_token_expires_in Int?
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  user                     User    @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [id], references: [id])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Profile {
-  id               Int                @id @unique @default(autoincrement())
+  id               String             @id @default(uuid())
   name             String
   birthday         DateTime
   bio              String
   profilePicture   String             @default("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png")
   BikingActivity   BikingActivity[]
   HikingActivity   HikingActivity[]
-  user             User               @relation(fields: [id], references: [id])
+  userId           User               @relation(fields: [id], references: [id])
   ProfileBadge     ProfileBadge[]
   ProfileRoom      ProfileRoom[]
   ranks            Rank[]
@@ -47,7 +87,7 @@ model Badge {
 }
 
 model ProfileBadge {
-  profileId Int
+  profileId String
   badgeId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -67,7 +107,7 @@ model Room {
 }
 
 model ProfileRoom {
-  profileId Int
+  profileId String
   roomId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,7 +154,7 @@ model ActivityType {
 
 model RunningActivity {
   id          Int      @id @default(autoincrement())
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   distance    Decimal
@@ -128,7 +168,7 @@ model RunningActivity {
 
 model BikingActivity {
   id          Int      @id @default(autoincrement())
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   distance    Decimal
@@ -142,7 +182,7 @@ model BikingActivity {
 
 model SwimmingActivity {
   id          Int      @id @default(autoincrement())
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   distance    Decimal
@@ -155,7 +195,7 @@ model SwimmingActivity {
 
 model WalkingActivity {
   id          Int      @id @default(autoincrement())
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   distance    Decimal
@@ -169,7 +209,7 @@ model WalkingActivity {
 
 model HikingActivity {
   id          Int      @id @default(autoincrement())
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   distance    Decimal
@@ -183,7 +223,7 @@ model HikingActivity {
 
 model RowingActivity {
   id          Int      @id @default(autoincrement())
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   distance    Decimal
@@ -197,7 +237,7 @@ model RowingActivity {
 model Rank {
   id            Int         @id @default(autoincrement())
   leaderboardId Int
-  profileId     Int
+  profileId     String
   rank          Int
   date          DateTime
   leaderboard   Leaderboard @relation(fields: [leaderboardId], references: [id])
@@ -217,7 +257,7 @@ model APIType {
 model APIToken {
   id           Int      @id @default(autoincrement())
   apiTypeId    Int
-  userId       Int
+  userId       String
   accessToken  String   @unique
   refreshToken String   @unique
   expiresAt    DateTime
