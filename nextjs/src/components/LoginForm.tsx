@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { GithubSignInButton, GoogleSignInButton } from './AuthButton';
+import { signIn } from 'next-auth/react';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,15 +17,14 @@ const LoginForm = () => {
       email: event.currentTarget.email.value,
       password: event.currentTarget.password.value,
     };
-
-    try {
-      const { data } = await axios.post('/api/login', payLoad);
-      alert(JSON.stringify(data, null, 2));
-
-      push('/profile');
-    } catch (err) {
-      const error = err as AxiosError;
-      alert(error.message);
+    const res = await signIn('credentials', {
+      ...payLoad,
+      redirect: false,
+    });
+    if(!res?.ok) {
+      alert(res?.error);
+      setIsLoading(false);
+      return;
     }
     setIsLoading(false);
   };

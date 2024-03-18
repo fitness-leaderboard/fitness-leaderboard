@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { GoogleSignInButton, GithubSignInButton } from './AuthButton';
+import { signIn } from 'next-auth/react';
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +27,11 @@ const RegisterForm = () => {
       const error = err as AxiosError;
       alert(error.message);
     }
+    // signIn('credentials', {
+    //   ...payLoad,
+    //   redirect: false,
+    // });
+    push('/profile');
     setIsLoading(false);
   };
 
@@ -49,12 +55,12 @@ const RegisterForm = () => {
             style={{
               backgroundColor: '#007bff',
             }}>
-            Signup
+            Register
           </button>
         </div>
       </form>
-      <GoogleSignInButton/>
-      <GithubSignInButton/>
+      <GoogleSignInButton />
+      <GithubSignInButton />
       <p>
         {`Don't have an account? `} <a href='/login'>Login</a>
       </p>
