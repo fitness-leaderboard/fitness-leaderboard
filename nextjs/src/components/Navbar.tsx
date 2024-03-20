@@ -1,17 +1,12 @@
 'use client';
 import React from 'react';
-import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { IoMdSync } from 'react-icons/io';
 import { CgLogOut } from 'react-icons/cg';
 import Link from 'next/link';
-import axios from 'axios';
+import { signOut } from 'next-auth/react';
 
 export default function NavBar() {
-  const logOut = async () => {
-    await axios.post('/api/logout');
-    window.location.reload();
-  };
 
   return (
     <header className='navbar-header'>
@@ -27,7 +22,7 @@ export default function NavBar() {
               border: 'none',
               cursor: 'pointer',
             }}
-            onClick={logOut}>
+            onClick={() => signOut()}>
             <CgLogOut />
           </button>
         </div>
