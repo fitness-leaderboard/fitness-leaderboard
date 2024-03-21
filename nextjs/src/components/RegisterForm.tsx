@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { GoogleSignInButton, GithubSignInButton } from './AuthButton';
-import { signIn } from 'next-auth/react';
+import { register } from '@/actions/register';
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,25 +12,29 @@ const RegisterForm = () => {
     event.preventDefault();
     setIsLoading(true);
 
+    const password = event.currentTarget.password.value;
+    const confirmPassword = event.currentTarget.confirmPassword.value;
+  
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+    
     const payLoad = {
+      firstName: event.currentTarget.firstName.value,
+      lastName: event.currentTarget.lastName.value,
       email: event.currentTarget.email.value,
       password: event.currentTarget.password.value,
     };
 
-    try {
-      const { data } = await axios.post('/api/register', payLoad);
-      alert(JSON.stringify(data, null, 2));
-
-      push('/profile');
-    } catch (err) {
-      const error = err as AxiosError;
-      alert(error.message);
+    const res = await register(payLoad);
+    if (res.error) {
+      alert(res.error);
+    } else {
+      alert('Registered successfully. Confirmation email sent!');
+      push('/');
     }
-    // signIn('credentials', {
-    //   ...payLoad,
-    //   redirect: false,
-    // });
-    push('/profile');
+
     setIsLoading(false);
   };
 
@@ -40,6 +43,12 @@ const RegisterForm = () => {
       <h1>Register</h1>
       <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignin}>
         <div className='input-group'>
+          <div>
+            <input type='text' placeholder='First Name' name='firstName' required />
+          </div>
+          <div>
+            <input type='text' placeholder='Last Name' name='lastName' required />
+          </div>
           <div>
             <input type='text' placeholder='Northeastern Email' name='email' required />
           </div>

@@ -49,7 +49,7 @@ const LoginForm = () => {
         <GithubSignInButton />
       </div>
       <p>
-        {`Don't have an account? `} <a href='/register'>Sign up</a>
+        {`Don't have an account? `} <a href='/auth/register'>Sign up</a>
       </p>
     </>
   );
