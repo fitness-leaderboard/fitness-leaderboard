@@ -1,15 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { GithubSignInButton, GoogleSignInButton } from './AuthButton';
-import { signIn } from 'next-auth/react';
+import { login } from '@/actions/login';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { push } = useRouter();
 
-  const handleSubmitSignin = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -17,22 +14,19 @@ const LoginForm = () => {
       email: event.currentTarget.email.value,
       password: event.currentTarget.password.value,
     };
-    const res = await signIn('credentials', {
-      ...payLoad,
-      redirect: false,
-    });
-    if(!res?.ok) {
-      alert(res?.error);
-      setIsLoading(false);
-      return;
+
+    const res = await login(payLoad);
+    if(res.error) {
+      alert(res.error);
     }
+
     setIsLoading(false);
   };
 
   return (
     <>
       <h1>Log In</h1>
-      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignin}>
+      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignIn}>
         <div className='input-group'>
           <div>
             <input type='text' placeholder='Northeastern Email' name='email' required />
@@ -50,8 +44,10 @@ const LoginForm = () => {
           </button>
         </div>
       </form>
-      <GoogleSignInButton/>
-      <GithubSignInButton/>
+      <div style={{ width: '100%', textAlign: 'center', margin: '20px 0' }}>
+        <GoogleSignInButton />
+        <GithubSignInButton />
+      </div>
       <p>
         {`Don't have an account? `} <a href='/register'>Sign up</a>
       </p>
