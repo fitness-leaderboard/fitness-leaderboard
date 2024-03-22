@@ -58,6 +58,15 @@ model VerificationToken {
   @@unique([email, token])
 }
 
+model PasswordResetToken {
+  token   String   @unique
+  expires DateTime
+  email   String
+  id      String   @id @default(uuid())
+
+  @@unique([email, token])
+}
+
 model Profile {
   id               String             @id @default(uuid())
   name             String

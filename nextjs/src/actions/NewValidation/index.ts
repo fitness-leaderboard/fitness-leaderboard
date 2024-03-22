@@ -2,7 +2,7 @@
 import { prisma } from '@/lib/db';
 import { getVerificationTokenByToken } from '@/lib/VerificationToken';
 
-export const newVerification = async (token: string) => {
+export const NewVerification = async (token: string) => {
   const existingToken = await getVerificationTokenByToken(token);
 
   if (!existingToken) {

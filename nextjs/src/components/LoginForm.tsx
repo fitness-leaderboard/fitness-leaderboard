@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { GithubSignInButton, GoogleSignInButton } from './AuthButton';
 import { login } from '@/actions/Login';
+import Link from 'next/link';
+import { Button } from '@mui/material';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +43,9 @@ const LoginForm = () => {
           <div>
             <input type='password' placeholder='Password' name='password' required />
           </div>
+          <Button size='small' variant='text' >
+            <Link href='/auth/reset'>Forgot password?</Link>
+          </Button>
           <button
             type='submit'
             disabled={isLoading}

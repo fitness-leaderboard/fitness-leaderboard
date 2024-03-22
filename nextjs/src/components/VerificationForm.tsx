@@ -1,34 +1,38 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { newVerification } from '@/actions/NewValidation';
+import { NewVerification } from '@/actions/NewValidation';
 import { useSearchParams } from 'next/navigation';
 
-const VerificationPage: React.FC = () => {
+const VerificationForm = () => {
   const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
 
   const searchParams = useSearchParams();
 
   const token = searchParams.get('token');
 
   const onSubmit = useCallback(() => {
-    if (success || error) return;
+    if (error) return;
 
     if (!token) {
       setError('Missing token!');
       return;
     }
 
-    newVerification(token)
-      .then(data => {
-        setSuccess(data.success);
-        setError(data.error);
+    NewVerification(token)
+     .then(data => {
+        if (data?.error) {
+          alert(data.error);
+        }
+
+        if (data?.success) {
+          alert(data.success);
+        }
       })
       .catch(() => {
         setError('Something went wrong!');
       });
-  }, [token, success, error]);
+  }, [token, error]);
 
   useEffect(() => {
     onSubmit();
@@ -43,4 +47,4 @@ const VerificationPage: React.FC = () => {
   );
 };
 
-export default VerificationPage;
+export default VerificationForm;
