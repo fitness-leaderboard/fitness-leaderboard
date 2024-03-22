@@ -53,6 +53,6 @@ export const authConfig: NextAuthConfig = {
   ],
   // Specifying the pages for sign in and sign out
   pages: {
-    signIn: '/login',
+    signIn: '/auth/login',
   },
 };

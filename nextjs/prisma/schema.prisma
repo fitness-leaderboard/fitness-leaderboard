@@ -9,17 +9,17 @@ datasource db {
 
 model User {
   id            String     @id @default(cuid())
-  name          String?
   email         String?    @unique
-  emailVerified DateTime?  @map("email_verified")
-  image         String?
   password      String?
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  emailVerified DateTime?  @map("email_verified")
+  image         String?
+  name          String?
   APIToken      APIToken[]
-  Profile       Profile?
   Accounts      Account[]
-  Session       Session[]
+  Profile       Profile?
+  Session       Session?
 }
 
 model Account {
@@ -28,14 +28,14 @@ model Account {
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? @db.Text
-  refresh_token_expires_in Int?
-  access_token             String? @db.Text
+  refresh_token            String?
+  access_token             String?
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? @db.Text
+  id_token                 String?
   session_state            String?
+  refresh_token_expires_in Int?
   user                     User    @relation(fields: [userId], references: [id])
 
   @@unique([provider, providerAccountId])
@@ -50,11 +50,12 @@ model Session {
 }
 
 model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+  token   String   @unique
+  expires DateTime
+  email   String
+  id      String   @id @default(uuid())
 
-  @@unique([identifier, token])
+  @@unique([email, token])
 }
 
 model Profile {
@@ -82,8 +83,8 @@ model Badge {
   iconPath     String
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  ProfileBadge ProfileBadge[]
   Challenge    Challenge[]
+  ProfileBadge ProfileBadge[]
 }
 
 model ProfileBadge {
@@ -141,15 +142,15 @@ model Challenge {
   startDate      DateTime     @default(now())
   endDate        DateTime     @default(now())
   badgeId        Int
-  Badge          Badge        @relation(fields: [badgeId], references: [id])
   ActivityType   ActivityType @relation(fields: [activityTypeId], references: [id])
+  Badge          Badge        @relation(fields: [badgeId], references: [id])
 }
 
 model ActivityType {
   id          Int           @id @default(autoincrement())
   name        String
-  Leaderboard Leaderboard[]
   Challenge   Challenge[]
+  Leaderboard Leaderboard[]
 }
 
 model RunningActivity {

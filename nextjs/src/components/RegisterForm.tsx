@@ -2,24 +2,24 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GoogleSignInButton, GithubSignInButton } from './AuthButton';
-import { register } from '@/actions/register';
+import { register } from '@/actions/Register';
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
 
-  const handleSubmitSignin = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
 
     const password = event.currentTarget.password.value;
     const confirmPassword = event.currentTarget.confirmPassword.value;
-  
+
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-    
+
     const payLoad = {
       firstName: event.currentTarget.firstName.value,
       lastName: event.currentTarget.lastName.value,
@@ -27,13 +27,18 @@ const RegisterForm = () => {
       password: event.currentTarget.password.value,
     };
 
-    const res = await register(payLoad);
-    if (res.error) {
-      alert(res.error);
-    } else {
-      alert('Registered successfully. Confirmation email sent!');
-      push('/');
-    }
+    register(payLoad)
+      .then(data => {
+        if (data?.error) {
+          alert(data.error);
+        }
+
+        if (data?.success) {
+          alert(data.success);
+          push('/');
+        }
+      })
+      .catch(() => alert('Something went wrong'));
 
     setIsLoading(false);
   };
@@ -41,7 +46,7 @@ const RegisterForm = () => {
   return (
     <>
       <h1>Register</h1>
-      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignin}>
+      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignIn}>
         <div className='input-group'>
           <div>
             <input type='text' placeholder='First Name' name='firstName' required />
@@ -71,7 +76,7 @@ const RegisterForm = () => {
       <GoogleSignInButton />
       <GithubSignInButton />
       <p>
-        {`Don't have an account? `} <a href='/login'>Login</a>
+        {`Already have an account? `} <a href='/login'>Login</a>
       </p>
     </>
   );

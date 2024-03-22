@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { GithubSignInButton, GoogleSignInButton } from './AuthButton';
-import { login } from '@/actions/login';
+import { login } from '@/actions/Login';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +15,17 @@ const LoginForm = () => {
       password: event.currentTarget.password.value,
     };
 
-    const res = await login(payLoad);
-    if(res.error) {
-      alert(res.error);
-    }
+    login(payLoad)
+      .then(data => {
+        if (data?.error) {
+          alert(data.error);
+        }
+
+        if (data?.success) {
+          alert(data.success);
+        }
+      })
+      .catch(() => alert('Something went wrong'));
 
     setIsLoading(false);
   };
