@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { newVerification } from '@/actions/NewValidation';
@@ -15,7 +15,7 @@ const VerificationPage: React.FC = () => {
   const onSubmit = useCallback(() => {
     if (success || error) return;
 
-    if (!token)  {
+    if (!token) {
       setError('Missing token!');
       return;
     }
@@ -38,9 +38,7 @@ const VerificationPage: React.FC = () => {
     <div>
       <h4>Email Verified</h4>
       <p>Your email has been successfully verified.</p>
-      <Link href='/auth/login'>
-        Back to Login
-      </Link>
+      <Link href='/auth/login'>Back to Login</Link>
     </div>
   );
 };

@@ -11,9 +11,6 @@ export const {
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async session({ token, session }) {
-      return session;
-    },
     async signIn({ user, account }) {
       // Allow OAuth to sign in without Email Verification
       if (account?.provider !== 'credentials') return true;
@@ -27,10 +24,6 @@ export const {
       if (!existingUser?.emailVerified) return false;
 
       return true;
-    },
-    async jwt({ token }) {
-      token.customField = 'customField';
-      return token;
     },
   },
   events: {
