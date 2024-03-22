@@ -1,5 +1,5 @@
 import { List } from '@mui/material';
-import { RankedBadge } from '@/components/Badges/RankedBadges';
+import { RankedBadge } from '@components/Badges/RankedBadges';
 import React from 'react';
 import '@css/list.css';
 

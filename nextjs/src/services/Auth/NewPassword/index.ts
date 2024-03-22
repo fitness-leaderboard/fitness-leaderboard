@@ -2,7 +2,7 @@
 import * as z from 'zod';
 import bcrypt from 'bcryptjs';
 import { NewPasswordSchema } from '@/schema';
-import { getPasswordResetTokenByToken } from '@/lib/PasswordResetToken';
+import { getPasswordResetTokenByToken } from '@services/Token/PasswordResetToken';
 import { prisma } from '@/lib/db';
 
 export const newPassword = async (

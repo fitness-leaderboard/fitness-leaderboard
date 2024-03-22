@@ -3,8 +3,8 @@ import * as z from 'zod';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/db';
 import { RegisterSchema } from '@/schema';
-import { generateVerificationToken } from '@/lib/Token';
-import { sendVerificationEmail } from '../EmailService';
+import { generateVerificationToken } from '@/services/Token';
+import { sendVerificationEmail } from '@/services/Auth/EmailService';
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);

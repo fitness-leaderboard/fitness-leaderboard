@@ -5,8 +5,8 @@ import { LoginSchema } from '@/schema';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { generateVerificationToken } from '@/lib/Token';
-import { sendVerificationEmail } from '../EmailService';
+import { generateVerificationToken } from '@services/Token';
+import { sendVerificationEmail } from '@services/Auth/EmailService';
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -22,8 +22,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     },
   });
 
-  if (!existingUser || !existingUser.password || !existingUser.email) {
-    return { error: 'Email does not exist' };
+  if (!existingUser || !existingUser.email) {
+    return { error: 'No account found with this email address' };
+  }
+
+  if (!existingUser.password) {
+    return {
+      error:
+        'This account was registered using a social login. Please use the corresponding social login button to sign in',
+    };
   }
 
   if (!existingUser.emailVerified) {

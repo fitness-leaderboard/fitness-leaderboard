@@ -1,6 +1,6 @@
 'use client';
-import NavBar from '@/components/Navbar';
-import Sidebar from '@/components/Sidebar';
+import NavBar from '@components/Navbar';
+import Sidebar from '@components/Sidebar';
 import '@css/sidebar.css';
 import '@css/navbar.css';
 

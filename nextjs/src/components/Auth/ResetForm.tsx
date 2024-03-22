@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { reset } from '@/actions/Reset';
+import { reset } from '@services/Auth/Reset';
 
 const ResetForm = () => {
   const [isLoading, setIsLoading] = useState(false);

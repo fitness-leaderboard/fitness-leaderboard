@@ -2,8 +2,8 @@
 import * as z from 'zod';
 import { prisma } from '@/lib/db';
 import { ResetSchema } from '@/schema';
-import { sendPasswordResetEmail } from '@/actions/EmailService';
-import { generatePasswordResetToken } from '@/lib/Token';
+import { sendPasswordResetEmail } from '@services/Auth/EmailService';
+import { generatePasswordResetToken } from '@services/Token';
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
   const validatedFields = ResetSchema.safeParse(values);

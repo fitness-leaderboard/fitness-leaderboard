@@ -1,17 +1,14 @@
 'use client';
 import React, { useState } from 'react';
-import { newPassword } from '@/actions/NewPassword';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { GoogleSignInButton, GithubSignInButton } from './AuthButton';
+import { register } from '@services/Auth/Register';
 
-const NewPasswordForm = () => {
+const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
 
-  const searchParams = useSearchParams();
-
-  const token = searchParams.get('token');
-
-  const handleSubmitReset = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -24,10 +21,13 @@ const NewPasswordForm = () => {
     }
 
     const payLoad = {
+      firstName: event.currentTarget.firstName.value,
+      lastName: event.currentTarget.lastName.value,
+      email: event.currentTarget.email.value.toLowerCase(),
       password: event.currentTarget.password.value,
     };
 
-    newPassword(payLoad, token)
+    register(payLoad)
       .then(data => {
         if (data?.error) {
           alert(data.error);
@@ -45,14 +45,23 @@ const NewPasswordForm = () => {
 
   return (
     <>
-      <h1>Enter a new password</h1>
-      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitReset}>
+      <h1>Register</h1>
+      <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignIn}>
         <div className='input-group'>
+          <div>
+            <input type='text' placeholder='First Name' name='firstName' required />
+          </div>
+          <div>
+            <input type='text' placeholder='Last Name' name='lastName' required />
+          </div>
+          <div>
+            <input type='text' placeholder='Northeastern Email' name='email' required />
+          </div>
           <div>
             <input type='password' placeholder='Password' name='password' required />
           </div>
           <div>
-            <input type='password' placeholder='Confirm Password' name='confirmPassword' required />
+            <input type='password' placeholder='Confirm' name='confirmPassword' required />
           </div>
           <button
             type='submit'
@@ -60,16 +69,17 @@ const NewPasswordForm = () => {
             style={{
               backgroundColor: '#007bff',
             }}>
-            Reset Password
+            Register
           </button>
         </div>
       </form>
-      <div style={{ width: '100%', textAlign: 'center', margin: '20px 0' }}></div>
+      <GoogleSignInButton />
+      <GithubSignInButton />
       <p>
-        <a href='/auth/login'>Return to Login</a>
+        {`Already have an account? `} <a href='/login'>Login</a>
       </p>
     </>
   );
 };
 
-export default NewPasswordForm;
+export default RegisterForm;

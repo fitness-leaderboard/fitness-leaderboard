@@ -1,33 +1,23 @@
 'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { GoogleSignInButton, GithubSignInButton } from './AuthButton';
-import { register } from '@/actions/Register';
+import { GithubSignInButton, GoogleSignInButton } from './AuthButton';
+import { login } from '@services/Auth/Login';
+import Link from 'next/link';
+import { Button } from '@mui/material';
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { push } = useRouter();
 
   const handleSubmitSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
 
-    const password = event.currentTarget.password.value;
-    const confirmPassword = event.currentTarget.confirmPassword.value;
-
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-
     const payLoad = {
-      firstName: event.currentTarget.firstName.value,
-      lastName: event.currentTarget.lastName.value,
-      email: event.currentTarget.email.value,
+      email: event.currentTarget.email.value.toLowerCase(),
       password: event.currentTarget.password.value,
     };
 
-    register(payLoad)
+    login(payLoad)
       .then(data => {
         if (data?.error) {
           alert(data.error);
@@ -35,7 +25,6 @@ const RegisterForm = () => {
 
         if (data?.success) {
           alert(data.success);
-          push('/');
         }
       })
       .catch(() => alert('Something went wrong'));
@@ -45,41 +34,37 @@ const RegisterForm = () => {
 
   return (
     <>
-      <h1>Register</h1>
+      <h1>Login</h1>
       <form className='auth-form' action='#' method='post' onSubmit={handleSubmitSignIn}>
         <div className='input-group'>
-          <div>
-            <input type='text' placeholder='First Name' name='firstName' required />
-          </div>
-          <div>
-            <input type='text' placeholder='Last Name' name='lastName' required />
-          </div>
           <div>
             <input type='text' placeholder='Northeastern Email' name='email' required />
           </div>
           <div>
             <input type='password' placeholder='Password' name='password' required />
           </div>
-          <div>
-            <input type='password' placeholder='Confirm' name='confirmPassword' required />
-          </div>
+          <Button size='small' variant='text' >
+            <Link href='/auth/reset'>Forgot password?</Link>
+          </Button>
           <button
             type='submit'
             disabled={isLoading}
             style={{
               backgroundColor: '#007bff',
             }}>
-            Register
+            Login
           </button>
         </div>
       </form>
-      <GoogleSignInButton />
-      <GithubSignInButton />
+      <div style={{ width: '100%', textAlign: 'center', margin: '20px 0' }}>
+        <GoogleSignInButton />
+        <GithubSignInButton />
+      </div>
       <p>
-        {`Already have an account? `} <a href='/login'>Login</a>
+        {`Don't have an account? `} <a href='/auth/register'>Sign up</a>
       </p>
     </>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

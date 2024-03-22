@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Paper, Typography, Box } from '@mui/material';
-import { ChallengeList } from '@/components/Challenges/ChallengeList';
-import { BadgeList } from '@/components/Badges/BadgeList';
+import { ChallengeList } from '@components/Challenges/ChallengeList';
+import { BadgeList } from '@components/Badges/BadgeList';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import ForestIcon from '@mui/icons-material/Forest';
 import PoolIcon from '@mui/icons-material/Pool';

@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { NewVerification } from '@/actions/NewValidation';
+import { NewVerification } from '@services/Auth/NewValidation';
 import { useSearchParams } from 'next/navigation';
 
 const VerificationForm = () => {
