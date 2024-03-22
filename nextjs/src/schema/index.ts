@@ -20,14 +20,14 @@ export const RegisterSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),
-  password: z.string().min(6, {
-    message: "Minimum 6 characters required",
+  password: z.string().refine(password => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password), {
+    message: "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.",
   }),
 });
 
 export const NewPasswordSchema = z.object({
-  password: z.string().min(6, {
-    message: "Minimum of 6 characters required",
+  password: z.string().refine(password => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password), {
+    message: "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.",
   }),
 });
 
