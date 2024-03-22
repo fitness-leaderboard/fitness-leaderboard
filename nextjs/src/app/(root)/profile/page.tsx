@@ -1,12 +1,13 @@
-import { auth } from '@/auth';
+'use client'
 import React from 'react';
+import { useCurrentUser } from '@/app/hooks/useCurrentUser';
 
-export default async function Profile() {
-  const session = await auth();
+export default function Profile() {
+  const user = useCurrentUser();
   
   return (
     <div>
-      {JSON.stringify(session)}
+      {JSON.stringify(user)}
     </div>
-  );
+  ); 
 }
