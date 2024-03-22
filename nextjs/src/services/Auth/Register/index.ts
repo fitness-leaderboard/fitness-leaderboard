@@ -11,11 +11,11 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
   if (!validatedFields.success) {
     const errorMessages = validatedFields.error.errors
-      .map((error) => {
+      .map(error => {
         return `${error.path[0]}: ${error.message}`;
       })
       .join('\n');
-  
+
     return { error: `Invalid fields:\n${errorMessages}` };
   }
 

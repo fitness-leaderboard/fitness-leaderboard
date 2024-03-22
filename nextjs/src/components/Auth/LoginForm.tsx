@@ -43,7 +43,7 @@ const LoginForm = () => {
           <div>
             <input type='password' placeholder='Password' name='password' required />
           </div>
-          <Button size='small' variant='text' >
+          <Button size='small' variant='text'>
             <Link href='/auth/reset'>Forgot password?</Link>
           </Button>
           <button

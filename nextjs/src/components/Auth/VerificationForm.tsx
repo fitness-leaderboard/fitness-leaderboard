@@ -20,7 +20,7 @@ const VerificationForm = () => {
     }
 
     NewVerification(token)
-     .then(data => {
+      .then(data => {
         if (data?.error) {
           alert(data.error);
         }

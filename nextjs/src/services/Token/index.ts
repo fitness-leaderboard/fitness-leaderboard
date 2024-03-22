@@ -24,7 +24,7 @@ export const generateVerificationToken = async (email: string) => {
       expires,
     },
   });
-  return verificationToken
+  return verificationToken;
 };
 
 export const generatePasswordResetToken = async (email: string) => {
@@ -35,7 +35,7 @@ export const generatePasswordResetToken = async (email: string) => {
 
   if (existingToken) {
     await prisma.passwordResetToken.delete({
-      where: { id: existingToken.id }
+      where: { id: existingToken.id },
     });
   }
 
@@ -43,9 +43,9 @@ export const generatePasswordResetToken = async (email: string) => {
     data: {
       email,
       token,
-      expires
-    }
+      expires,
+    },
   });
 
   return passwordResetToken;
-}
+};

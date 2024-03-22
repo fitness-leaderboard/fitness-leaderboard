@@ -28,7 +28,6 @@ const ResetForm = () => {
     setIsLoading(false);
   };
 
-
   return (
     <>
       <h1>Reset Password</h1>
@@ -47,8 +46,7 @@ const ResetForm = () => {
           </button>
         </div>
       </form>
-      <div style={{ width: '100%', textAlign: 'center', margin: '20px 0' }}>
-      </div>
+      <div style={{ width: '100%', textAlign: 'center', margin: '20px 0' }}></div>
       <p>
         <a href='/auth/login'>Return to Login</a>
       </p>

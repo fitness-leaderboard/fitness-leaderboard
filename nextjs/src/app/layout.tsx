@@ -22,11 +22,11 @@ export default async function AppLayout({
 
   return (
     <SessionProvider session={session}>
-    <html lang='en'>
-      <body className='min-h-screen'>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-      </body>
-    </html>
+      <html lang='en'>
+        <body className='min-h-screen'>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </body>
+      </html>
     </SessionProvider>
   );
 }

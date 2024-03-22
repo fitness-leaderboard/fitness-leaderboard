@@ -15,7 +15,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   } catch (e) {
     console.error(e);
   }
-}
+};
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const fromEmail = `Husky Pack <husky-leaderboard@${process.env.TEST_DOMAIN}>`;
