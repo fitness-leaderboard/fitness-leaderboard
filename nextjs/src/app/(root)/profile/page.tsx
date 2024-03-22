@@ -1,5 +1,13 @@
+'use client'
 import React from 'react';
+import { useCurrentUser } from '@/app/hooks/useCurrentUser';
 
 export default function Profile() {
-  return <div>Profile</div>;
+  const user = useCurrentUser();
+  
+  return (
+    <div>
+      {JSON.stringify(user)}
+    </div>
+  ); 
 }
